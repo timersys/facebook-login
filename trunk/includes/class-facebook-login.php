@@ -168,7 +168,7 @@ class Facebook_Login {
 			$this->loader->add_action( 'wp_ajax_nopriv_fbl_facebook_login', $plugin_public, 'login_or_register_user' );
 		}
 		if(  !empty( $this->opts['fb_avatars'] ) )
-			$this->loader->add_filter( 'get_avatar', $plugin_public, 'use_fb_avatars' );
+			$this->loader->add_filter( 'get_avatar', $plugin_public, 'use_fb_avatars',10, 5 );
 
 	}
 
