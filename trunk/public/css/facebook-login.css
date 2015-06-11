@@ -1,0 +1,29 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+.css-fbl{
+    background: url("../img/fb-icon.png") no-repeat 10px center;
+    background-color: #2b4170;
+    background: url("../img/fb-icon.png") no-repeat 10px center, -moz-linear-gradient(top, #3b5998, #2b4170);
+    background: url("../img/fb-icon.png") no-repeat 10px center, -ms-linear-gradient(top, #3b5998, #2b4170);
+    background: url("../img/fb-icon.png") no-repeat 10px center, -webkit-linear-gradient(top, #3b5998, #2b4170);
+    background-size: 25px 25px, cover;
+    height: 45px;
+    line-height: 45px;
+    display: block;
+    padding-left: 50px;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 16px;
+}
+.css-fbl img{
+    display: none;
+    width: 20px;
+    float: right;
+    margin: 12px;
+    height: auto;
+}
+.css-fbl.loading img{
+    display: block;
+}
