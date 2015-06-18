@@ -15,6 +15,10 @@ Facebook Login for developers... and everyone else . Simple adds a facebook logi
 If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin.
 There won't be any settings other than facebook app id and enable avatars. Any other customizations needed will be in the code.
 
+= GitHub =
+
+Please contribute on [https://github.com/timersys/facebook-login](https://github.com/timersys/facebook-login)
+
 
 == Installation ==
 
