@@ -22,7 +22,7 @@
                  * "me" refers to the current FB user, console.log( response )
                  * for a full list.
                  */
-                FB.api('/me', function(response) {
+                FB.api('/me?fields=first_name,last_name,email,link', function(response) {
                     var fb_response = response;
 
                     /**
