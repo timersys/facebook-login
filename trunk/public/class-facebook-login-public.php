@@ -125,7 +125,7 @@ class Facebook_Login_Public {
 		check_ajax_referer( 'facebook-nonce', 'security' );
 
 		// Map our FB response fields to the correct user fields as found in wp_update_user
-		apply_filters( 'fbl/user_data_login', $user = array(
+		$user = apply_filters( 'fbl/user_data_login', array(
 			'username'   => $_POST['fb_response']['id'],
 			'user_login' => $_POST['fb_response']['id'],
 			'first_name' => $_POST['fb_response']['first_name'],
