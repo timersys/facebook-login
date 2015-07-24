@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: http://wp.timersys.com
 Tags: facebook, facebook login
 Requires at least: 3.6
-Tested up to: 4.2.2
-Stable tag: 1.0.1
+Tested up to: 4.2.3
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,13 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.0.2 =
+
+* Fixed bug with avatars
+* Added scopes in case api version of fb > 2.3 - thanks to sdether
+* redirect fix
+* Added some more filters
 
 = 1.0.1 =
 

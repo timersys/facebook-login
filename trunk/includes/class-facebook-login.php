@@ -74,7 +74,7 @@ class Facebook_Login {
 	public function __construct() {
 
 		$this->plugin_name  = 'facebook-login';
-		$this->version      = '1.0.1';
+		$this->version      = '1.0.2';
 		$this->opts         = get_option('fbl_settings');
 
 		$this->load_dependencies();
