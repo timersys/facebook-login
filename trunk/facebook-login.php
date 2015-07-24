@@ -10,7 +10,7 @@
  * Plugin Name:       Facebook Login for developers
  * Plugin URI:        http://wordpress.org/plugins/facebook-login
  * Description:       Facebook Login for developers... and everyone else
- * Version:           1.0.0
+ * Version:           1.0.2
  * Author:            Damian Logghe
  * Author URI:        http://wp.timersys.com
  * License:           GPL-2.0+

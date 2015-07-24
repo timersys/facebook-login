@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: http://wp.timersys.com
 Tags: facebook, facebook login
 Requires at least: 3.6
-Tested up to: 4.2
-Stable tag: 1.0.0
+Tested up to: 4.2.3
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,13 +15,18 @@ Facebook Login for developers... and everyone else . Simple adds a facebook logi
 If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin.
 There won't be any settings other than facebook app id and enable avatars. Any other customizations needed will be in the code.
 
+= GitHub =
+
+Please contribute on [https://github.com/timersys/facebook-login](https://github.com/timersys/facebook-login)
+
 
 == Installation ==
 
 
-1. Upload `facebook-login.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+1. Install plugin zip using `/wp-admin/plugin-install.php` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Place `<?php do_action('<?php do_action('facebook_login_button');?>` in your templates if you need it somewhere else than wp-login.php
+
 
 == Frequently Asked Questions ==
 
@@ -35,6 +40,17 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.0.2 =
+
+* Fixed bug with avatars
+* Added scopes in case api version of fb > 2.3 - thanks to sdether
+* redirect fix
+* Added some more filters
+
+= 1.0.1 =
+
+* Added facebook_login_button hook
 
 = 1.0.0 =
 * First version

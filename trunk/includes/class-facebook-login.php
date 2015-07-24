@@ -74,7 +74,7 @@ class Facebook_Login {
 	public function __construct() {
 
 		$this->plugin_name  = 'facebook-login';
-		$this->version      = '1.0.0';
+		$this->version      = '1.0.2';
 		$this->opts         = get_option('fbl_settings');
 
 		$this->load_dependencies();
@@ -166,6 +166,11 @@ class Facebook_Login {
 			$this->loader->add_action( 'login_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 			$this->loader->add_action( 'wp_ajax_fbl_facebook_login', $plugin_public, 'login_or_register_user' );
 			$this->loader->add_action( 'wp_ajax_nopriv_fbl_facebook_login', $plugin_public, 'login_or_register_user' );
+			$this->loader->add_action( 'facebook_login_button', $plugin_public, 'add_button_to_login_form' );
+			$this->loader->add_action( 'facebook_login_button', $plugin_public, 'add_fb_scripts' );
+			$this->loader->add_action( 'facebook_login_button', $plugin_public, 'enqueue_scripts' );
+			$this->loader->add_action( 'facebook_login_button', $plugin_public, 'enqueue_styles' );
+
 		}
 		if(  !empty( $this->opts['fb_avatars'] ) )
 			$this->loader->add_filter( 'get_avatar', $plugin_public, 'use_fb_avatars',10, 5 );
