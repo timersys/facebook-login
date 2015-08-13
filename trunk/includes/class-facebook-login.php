@@ -74,7 +74,7 @@ class Facebook_Login {
 	public function __construct() {
 
 		$this->plugin_name  = 'facebook-login';
-		$this->version      = '1.0.2';
+		$this->version      = '1.0.3';
 		$this->opts         = get_option('fbl_settings');
 
 		$this->load_dependencies();
@@ -161,6 +161,7 @@ class Facebook_Login {
 
 		if( !empty( $this->opts['fb_id'] ) ) {
 			$this->loader->add_action( 'login_form', $plugin_public, 'add_button_to_login_form' );
+			$this->loader->add_action( 'register_form', $plugin_public, 'add_button_to_login_form' );
 			$this->loader->add_action( 'login_head', $plugin_public, 'add_fb_scripts' );
 			$this->loader->add_action( 'login_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 			$this->loader->add_action( 'login_enqueue_scripts', $plugin_public, 'enqueue_scripts' );

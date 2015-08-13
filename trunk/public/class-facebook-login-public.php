@@ -132,6 +132,7 @@ class Facebook_Login_Public {
 			'last_name'  => $_POST['fb_response']['last_name'],
 			'user_email' => $_POST['fb_response']['email'],
 			'user_url'   => $_POST['fb_response']['link'],
+			'user_pass'  => wp_generate_password(),
 		));
 		do_action( 'fbl/before_login', $user);
 		$status = array( 'error' => 'Invalid User');
