@@ -3,17 +3,20 @@ Contributors: timersys
 Donate link: http://wp.timersys.com
 Tags: facebook, facebook login
 Requires at least: 3.6
-Tested up to: 4.2.3
-Stable tag: 1.0.2
+Tested up to: 4.3
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Facebook Login for developers... and everyone else . Simple adds a facebook login button into wp-login.php and let you use fb avatars, period.
+Facebook Login. Simple adds a facebook login button into wp-login.php and let you use fb avatars, period.
 
 == Description ==
 
 If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin.
-There won't be any settings other than facebook app id and enable avatars. Any other customizations needed will be in the code.
+If you need to add a facebook login in your template use the following code:
+
+`<?php do_action('<?php do_action('facebook_login_button');?>`
+
 
 = GitHub =
 
@@ -40,6 +43,11 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.0.3 =
+
+* Fixed undefined error when notices are on
+* Added button to registration screen
 
 = 1.0.2 =
 
