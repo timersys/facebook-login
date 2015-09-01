@@ -136,30 +136,26 @@ class Facebook_Login_Public {
 		));
 		do_action( 'fbl/before_login', $user);
 		$status = array( 'error' => 'Invalid User');
-		if ( empty( $user['username'] ) ){
-			wp_send_json( $status );
-			die();
+		if ( empty( $user['username'] ) )
+			$this->ajax_response( $status );
+
+		$user_obj = get_user_by('email', $user['user_email']);
+
+		if ( $user_obj ){
+			$user_id = $user_obj->ID;
+			$status = array( 'success' => $user_id);
 		} else {
-
-			$user_obj = get_user_by( 'login', $user['user_login'] );
-
-			if ( $user_obj ){
-				$user_id = $user_obj->ID;
+			$user_id = $this->register_user( $user );
+			if( !is_wp_error($user_id) ) {
+				update_user_meta( $user_id, '_fb_user_id', $user['user_login'] );
 				$status = array( 'success' => $user_id);
-			} else {
-				$user_id = $this->register_user( $user );
-				if( !is_wp_error($user_id) ) {
-					update_user_meta( $user_id, '_fb_user_id', $user['user_login'] );
-					$status = array( 'success' => $user_id);
-				}
-			}
-			if( is_numeric( $user_id ) ) {
-				wp_set_auth_cookie( $user_id, true );
-				do_action( 'fbl/after_login', $user, $user_id);
 			}
 		}
-
-		wp_send_json( $status );
+		if( is_numeric( $user_id ) ) {
+			wp_set_auth_cookie( $user_id, true );
+			do_action( 'fbl/after_login', $user, $user_id);
+		}
+		$this->ajax_response( $status );
 	}
 
 	/**
@@ -219,6 +215,15 @@ class Facebook_Login_Public {
 		}
 
 		return $avatar;
+	}
+
+	/**
+	 * Function to send ajax response in script
+	 * @param $status
+	 */
+	private function ajax_response( $status ) {
+		wp_send_json( $status );
+		die();
 	}
 
 }

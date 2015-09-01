@@ -17,6 +17,15 @@
     text-decoration: none;
     margin-bottom: 16px;
 }
+a.css-fbl:hover{
+    background-color: #062c70;
+    background: url("../img/fb-icon.png") no-repeat 10px center, -moz-linear-gradient(top, #3b5998, #062C70);
+    background: url("../img/fb-icon.png") no-repeat 10px center, -ms-linear-gradient(top, #3b5998, #062C70);
+    background: url("../img/fb-icon.png") no-repeat 10px center, -webkit-linear-gradient(top, #3b5998, #062C70);
+    background-size: 25px 25px, cover;
+    color: #FDFDFD;
+    text-shadow: 1px 1px 0px #000;
+}
 .css-fbl img{
     display: none;
     width: 20px;
@@ -26,4 +35,9 @@
 }
 .css-fbl.loading img{
     display: block;
+}
+.fbl_error {
+    float: left;
+    color: red;
+    width: 100%;
 }
