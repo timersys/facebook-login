@@ -1,7 +1,7 @@
 === Facebook Login ===
 Contributors: timersys
 Donate link: http://wp.timersys.com
-Tags: facebook, facebook login
+Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, registration form, login form, login widget, registration widget
 Requires at least: 3.6
 Tested up to: 4.3
 Stable tag: 1.0.3
