@@ -7,6 +7,7 @@
             $this           = $( this),
             $redirect_to    = $form_obj.find('input[name="redirect_to"]').val() || false;
         $this.addClass('loading');
+        $('.fbl_error').remove();
         FB.login( function( response ) {
             /**
              * If we get a successful authorization response we handle it
@@ -49,6 +50,14 @@
                                     location.href = fbl.site_url;
                                 }
                             }
+                            else if( data && data.error ) {
+                                $this.removeClass('loading');
+                                $form_obj.append( '<p class="fbl_error">' + data.error + '</p>' );
+                            }
+                        },
+                        error: function( data ){
+                            $this.removeClass('loading');
+                            $form_obj.append( '<p class="fbl_error">' + data + '</p>' );
                         }
                     });
                 });
