@@ -17,10 +17,22 @@ If you need to add a facebook login in your template use the following code:
 
 `<?php do_action('<?php do_action('facebook_login_button');?>`
 
+> <strong>Premium Version</strong><br>
+>
+> Check the **new premium version** available in ([https://timersys.com/plugins/facebook-login-pro/](https://timersys.com/plugins/facebook-login-pro/?utm_source=readme%20file&utm_medium=readme%20links&utm_campaign=facebook-login))
+>
+> * Powerful Login / Registration AJAX sidebar widget,
+> * Also available with a shortcode and php template function
+> * Compatible with WooCommerce and Easy Digital Downloads checkout pages
+> * Compatible with BuddyPress
+> * Login widget in Popups
+> * Premium support
+>
 
 = GitHub =
 
 Please contribute on [https://github.com/timersys/facebook-login](https://github.com/timersys/facebook-login)
+
 
 
 == Installation ==
