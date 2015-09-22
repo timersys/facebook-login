@@ -30,7 +30,10 @@ class Facebook_Login_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
+		$upgrader = new Fbl_Upgrader( 'fbl', FBL_VERSION);
+		$upgrader->upgrade_plugin();
 
+		update_option('fbl_version', FBL_VERSION);
 	}
 
 }

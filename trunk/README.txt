@@ -1,10 +1,10 @@
 === Facebook Login ===
 Contributors: timersys
 Donate link: http://wp.timersys.com
-Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, registration form, login form, login widget, registration widget
+Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, registration form, login form, login widget, registration widget, ajax login, facebook ajax login
 Requires at least: 3.6
 Tested up to: 4.3
-Stable tag: 1.0.4
+Stable tag: 1.0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,9 @@ Facebook Login. Simple adds a facebook login button into wp-login.php and let yo
 
 If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin.
 If you need to add a facebook login in your template use the following code:
+
+= Configuration =
+Once you install the plugin, you need to configure it. Please follow [this guide](https://timersys.com/facebook-login/docs/configuration/)
 
 `<?php do_action('<?php do_action('facebook_login_button');?>`
 
@@ -40,7 +43,8 @@ Please contribute on [https://github.com/timersys/facebook-login](https://github
 
 1. Install plugin zip using `/wp-admin/plugin-install.php` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Place `<?php do_action('<?php do_action('facebook_login_button');?>` in your templates if you need it somewhere else than wp-login.php
+3. Go to Settings -> Facebook Login and enter your facebook app ID
+4. Place `<?php do_action('<?php do_action('facebook_login_button');?>` in your templates if you need it somewhere else than wp-login.php
 
 
 == Frequently Asked Questions ==
@@ -55,6 +59,11 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.0.4.1 =
+
+* Minor css and js fixes
+* Updated docs in readme
 
 = 1.0.4 =
 
