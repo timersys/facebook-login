@@ -157,6 +157,8 @@ class Facebook_Login_Public {
 
 		$user_obj = $this->getUserBy( $user );
 
+		$meta_updated = false;
+
 		if ( $user_obj ){
 			$user_id = $user_obj->ID;
 			$status = array( 'success' => $user_id);
@@ -164,11 +166,14 @@ class Facebook_Login_Public {
 			$user_id = $this->register_user( $user );
 			if( !is_wp_error($user_id) ) {
 				update_user_meta( $user_id, '_fb_user_id', $user['user_login'] );
+				$meta_updated = true;
 				$status = array( 'success' => $user_id);
 			}
 		}
 		if( is_numeric( $user_id ) ) {
 			wp_set_auth_cookie( $user_id, true );
+			if( !$meta_updated )
+				update_user_meta( $user_id, '_fb_user_id', $user['user_login'] );
 			do_action( 'fbl/after_login', $user, $user_id);
 		}
 		$this->ajax_response( $status );
