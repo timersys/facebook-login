@@ -13,7 +13,7 @@
     line-height: 45px;
     display: block;
     padding-left: 50px;
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
     margin-bottom: 16px;
 }
