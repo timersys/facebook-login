@@ -8,59 +8,48 @@
             $redirect_to    = $form_obj.find('input[name="redirect_to"]').val() || false;
         $this.addClass('loading');
         $('.fbl_error').remove();
+
         FB.login( function( response ) {
+
+
             /**
              * If we get a successful authorization response we handle it
-             * note the "scope" parameter.
              */
-            var requested_scopes = ['public_profile','email','contact_email'];
-            var response_scopes = $.map( response.authResponse.grantedScopes.split(","), $.trim );
-            var diff = $( requested_scopes ).not( response_scopes ).get();
-            var granted_access = diff.length || false ;
-            if ( ! granted_access ){
+            if (response.status == 'connected') {
+
+                var fb_response = response;
 
                 /**
-                 * "me" refers to the current FB user, console.log( response )
-                 * for a full list.
+                 * Send the obtained token to server side for extra checks and user data retrieval
                  */
-                FB.api('/me?fields=first_name,last_name,email,link', function(response) {
-                    var fb_response = response;
-
-                    /**
-                     * Make an Ajax request to the "facebook_login" function
-                     * passing the params: username, fb_id and email.
-                     *
-                     * @note Not all users have user names, but all have email
-                     * @note Must set global to false to prevent gloabl ajax methods
-                     */
-                    $.ajax({
-                        data: {
-                            action: "fbl_facebook_login",
-                            fb_response: fb_response,
-                            security: $this.data('fb_nonce')
-                        },
-                        global: false,
-                        type: "POST",
-                        url: fbl.ajaxurl,
-                        success: function( data ){
-                            if( data && data.success ) {
-                                if( $redirect_to.length ) {
-                                    location.href = $redirect_to;
-                                } else {
-                                    location.href = fbl.site_url;
-                                }
+                $.ajax({
+                    data: {
+                        action: "fbl_facebook_login",
+                        fb_response: fb_response,
+                        security: $this.data('fb_nonce')
+                    },
+                    global: false,
+                    type: "POST",
+                    url: fbl.ajaxurl,
+                    success: function( data ){
+                        if( data && data.success ) {
+                            if( $redirect_to.length ) {
+                                location.href = $redirect_to;
+                            } else {
+                                location.href = fbl.site_url;
                             }
-                            else if( data && data.error ) {
-                                $this.removeClass('loading');
-                                $form_obj.append( '<p class="fbl_error">' + data.error + '</p>' );
-                            }
-                        },
-                        error: function( data ){
-                            $this.removeClass('loading');
-                            $form_obj.append( '<p class="fbl_error">' + data + '</p>' );
                         }
-                    });
+                        else if( data && data.error ) {
+                            $this.removeClass('loading');
+                            $form_obj.append( '<p class="fbl_error">' + data.error + '</p>' );
+                        }
+                    },
+                    error: function( data ){
+                        $this.removeClass('loading');
+                        $form_obj.append( '<p class="fbl_error">' + data + '</p>' );
+                    }
                 });
+
             } else {
                 $this.removeClass('loading');
                 console.log('User canceled login or did not fully authorize.');

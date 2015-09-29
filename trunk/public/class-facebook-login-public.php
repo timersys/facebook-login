@@ -124,18 +124,34 @@ class Facebook_Login_Public {
 	public function login_or_register_user() {
 		check_ajax_referer( 'facebook-nonce', 'security' );
 
+		// Get user from Facebook with given access token
+		$fb_url = add_query_arg( array(
+			'fields'        =>  'id,first_name,last_name,email,link',
+			'access_token'  =>  $_POST['fb_response']['authResponse']['accessToken'],
+		), 'https://graph.facebook.com/v2.4/'.$_POST['fb_response']['authResponse']['userID'] );
+
+		$fb_response = wp_remote_get( $fb_url );
+
+		if( is_wp_error( $fb_response ) )
+			$this->ajax_response( array( 'error' => $fb_response->get_error_message() ) );
+
+		$fb_user = json_decode( wp_remote_retrieve_body( $fb_response ), true );
+
 		// Map our FB response fields to the correct user fields as found in wp_update_user
 		$user = apply_filters( 'fbl/user_data_login', array(
-			'username'   => $_POST['fb_response']['id'],
-			'user_login' => $_POST['fb_response']['id'],
-			'first_name' => $_POST['fb_response']['first_name'],
-			'last_name'  => $_POST['fb_response']['last_name'],
-			'user_email' => $_POST['fb_response']['email'],
-			'user_url'   => $_POST['fb_response']['link'],
+			'username'   => $fb_user['id'],
+			'user_login' => $fb_user['id'],
+			'first_name' => $fb_user['first_name'],
+			'last_name'  => $fb_user['last_name'],
+			'user_email' => $fb_user['email'],
+			'user_url'   => $fb_user['link'],
 			'user_pass'  => wp_generate_password(),
 		));
+
 		do_action( 'fbl/before_login', $user);
+
 		$status = array( 'error' => 'Invalid User');
+
 		if ( empty( $user['username'] ) )
 			$this->ajax_response( $status );
 
