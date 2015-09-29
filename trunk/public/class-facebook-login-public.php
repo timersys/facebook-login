@@ -155,7 +155,7 @@ class Facebook_Login_Public {
 		if ( empty( $user['username'] ) )
 			$this->ajax_response( $status );
 
-		$user_obj = get_user_by('email', $user['user_email']);
+		$user_obj = $this->getUserBy( $user );
 
 		if ( $user_obj ){
 			$user_id = $user_obj->ID;
@@ -242,4 +242,29 @@ class Facebook_Login_Public {
 		die();
 	}
 
+	/**
+	 * Try to retrieve an user by email or username
+	 *
+	 * @param $user array of username and pass
+	 *
+	 * @return false|WP_User
+	 */
+	private function getUserBy( $user ) {
+
+		$user_data = get_user_by('email', $user['email']);
+
+		if( ! $user_data )
+			$user_data = reset(
+				get_users(
+					array(
+						'meta_key'      => '_fb_user_id',
+						'meta_value'    => $user['user_login'],
+						'number'        => 1,
+						'count_total'   => false
+					)
+				)
+			);
+
+		return $user_data;
+	}
 }
