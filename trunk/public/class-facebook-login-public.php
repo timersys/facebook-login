@@ -137,6 +137,10 @@ class Facebook_Login_Public {
 
 		$fb_user = json_decode( wp_remote_retrieve_body( $fb_response ), true );
 
+		//check if user at least provided email
+		if( empty( $fb_user['email'] ) )
+			$this->ajax_response( array( 'error' => __('We need your email in order to continue. Please try loging again. ', $this->plugin_name ) ) );
+
 		// Map our FB response fields to the correct user fields as found in wp_update_user
 		$user = apply_filters( 'fbl/user_data_login', array(
 			'username'   => $fb_user['id'],
@@ -150,7 +154,7 @@ class Facebook_Login_Public {
 
 		do_action( 'fbl/before_login', $user);
 
-		$status = array( 'error' => 'Invalid User');
+		$status = array( 'error' => __( 'Invalid User', $this->plugin_name ) );
 
 		if ( empty( $user['username'] ) )
 			$this->ajax_response( $status );
@@ -162,6 +166,10 @@ class Facebook_Login_Public {
 		if ( $user_obj ){
 			$user_id = $user_obj->ID;
 			$status = array( 'success' => $user_id);
+			// check if user email exist or update accordingly
+			if( empty( $user_obj->user_email ) )
+				wp_update_user( array( 'ID' => $user_id, 'user_email' => $user['user_email'] ) );
+
 		} else {
 			$user_id = $this->register_user( $user );
 			if( !is_wp_error($user_id) ) {

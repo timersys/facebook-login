@@ -11,7 +11,6 @@
 
         FB.login( function( response ) {
 
-
             /**
              * If we get a successful authorization response we handle it
              */
@@ -38,10 +37,14 @@
                             } else {
                                 location.href = fbl.site_url;
                             }
-                        }
-                        else if( data && data.error ) {
+                        } else if( data && data.error ) {
                             $this.removeClass('loading');
-                            $form_obj.append( '<p class="fbl_error">' + data.error + '</p>' );
+                            if( $form_obj.length ) {
+                                $form_obj.append('<p class="fbl_error">' + data.error + '</p>');
+                            } else {
+                                // we just have a button
+                                $('<p class="fbl_error">' + data.error + '</p>').insertAfter( $this );
+                            }
                         }
                     },
                     error: function( data ){
@@ -60,7 +63,8 @@
              * @url https://developers.facebook.com/docs/authentication/permissions/
              */
             scope: 'email',
-            return_scopes: true
+            return_scopes: true,
+            auth_type: 'rerequest'
         });
     });
 
