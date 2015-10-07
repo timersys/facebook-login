@@ -76,6 +76,7 @@ class Facebook_Login_Public {
 		wp_localize_script( $this->plugin_name, 'fbl', apply_filters( 'fbl/js_vars', array(
 			'ajaxurl'      => admin_url('admin-ajax.php'),
 			'site_url'     => home_url(),
+			'scopes'       => 'email,public_profile',
 		)));
 	}
 

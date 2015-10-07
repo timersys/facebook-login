@@ -58,11 +58,7 @@
                 console.log('User canceled login or did not fully authorize.');
             }
         },{
-            /**
-             * See the following for full list:
-             * @url https://developers.facebook.com/docs/authentication/permissions/
-             */
-            scope: 'email',
+            scope: fbl.scopes,
             return_scopes: true,
             auth_type: 'rerequest'
         });
