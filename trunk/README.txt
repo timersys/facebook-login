@@ -4,7 +4,7 @@ Donate link: http://wp.timersys.com
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, registration form, login form, login widget, registration widget, ajax login, facebook ajax login
 Requires at least: 3.6
 Tested up to: 4.3.1
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,11 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.0.6 =
+* Fixed bug when users deny to provide email with facebook
+* Fb username is now more friendly
+* Minor bugfixes and code improvement
 
 = 1.0.5 =
 * Changed the way users login to a more secure one ( Thanks Zoli! )
