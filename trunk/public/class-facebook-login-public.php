@@ -76,6 +76,7 @@ class Facebook_Login_Public {
 		wp_localize_script( $this->plugin_name, 'fbl', apply_filters( 'fbl/js_vars', array(
 			'ajaxurl'      => admin_url('admin-ajax.php'),
 			'site_url'     => home_url(),
+			'scopes'       => 'email,public_profile',
 		)));
 	}
 
@@ -137,10 +138,14 @@ class Facebook_Login_Public {
 
 		$fb_user = json_decode( wp_remote_retrieve_body( $fb_response ), true );
 
+		//check if user at least provided email
+		if( empty( $fb_user['email'] ) )
+			$this->ajax_response( array( 'error' => __('We need your email in order to continue. Please try loging again. ', $this->plugin_name ) ) );
+
 		// Map our FB response fields to the correct user fields as found in wp_update_user
 		$user = apply_filters( 'fbl/user_data_login', array(
-			'username'   => $fb_user['id'],
-			'user_login' => $fb_user['id'],
+			'fb_user_id' => $fb_user['id'],
+			'user_login' => $this->generateUsername( $fb_user ),
 			'first_name' => $fb_user['first_name'],
 			'last_name'  => $fb_user['last_name'],
 			'user_email' => $fb_user['email'],
@@ -150,25 +155,34 @@ class Facebook_Login_Public {
 
 		do_action( 'fbl/before_login', $user);
 
-		$status = array( 'error' => 'Invalid User');
+		$status = array( 'error' => __( 'Invalid User', $this->plugin_name ) );
 
-		if ( empty( $user['username'] ) )
+		if ( empty( $user['fb_user_id'] ) )
 			$this->ajax_response( $status );
 
 		$user_obj = $this->getUserBy( $user );
 
+		$meta_updated = false;
+
 		if ( $user_obj ){
 			$user_id = $user_obj->ID;
 			$status = array( 'success' => $user_id);
+			// check if user email exist or update accordingly
+			if( empty( $user_obj->user_email ) )
+				wp_update_user( array( 'ID' => $user_id, 'user_email' => $user['user_email'] ) );
+
 		} else {
 			$user_id = $this->register_user( $user );
 			if( !is_wp_error($user_id) ) {
-				update_user_meta( $user_id, '_fb_user_id', $user['user_login'] );
+				update_user_meta( $user_id, '_fb_user_id', $user['fb_user_id'] );
+				$meta_updated = true;
 				$status = array( 'success' => $user_id);
 			}
 		}
 		if( is_numeric( $user_id ) ) {
 			wp_set_auth_cookie( $user_id, true );
+			if( !$meta_updated )
+				update_user_meta( $user_id, '_fb_user_id', $user['fb_user_id'] );
 			do_action( 'fbl/after_login', $user, $user_id);
 		}
 		$this->ajax_response( $status );
@@ -251,7 +265,7 @@ class Facebook_Login_Public {
 	 */
 	private function getUserBy( $user ) {
 
-		$user_data = get_user_by('email', $user['email']);
+		$user_data = get_user_by('email', $user['user_email']);
 
 		if( ! $user_data )
 			$user_data = reset(
@@ -267,4 +281,18 @@ class Facebook_Login_Public {
 
 		return $user_data;
 	}
+
+	/**
+	 * Generated a friendly username for facebook users
+	 * @param $fb_user
+	 *
+	 * @return string
+	 */
+	private function generateUsername( $fb_user ) {
+		$email = explode( "@", $fb_user['email'] );
+		$id    = substr( $fb_user['id'], 0, 5 );
+
+		return $email[0] . '_' . $id;
+	}
+
 }
