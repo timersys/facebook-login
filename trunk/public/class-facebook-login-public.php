@@ -265,7 +265,7 @@ class Facebook_Login_Public {
 	 */
 	private function getUserBy( $user ) {
 
-		$user_data = get_user_by('email', $user['email']);
+		$user_data = get_user_by('email', $user['user_email']);
 
 		if( ! $user_data )
 			$user_data = reset(
