@@ -85,7 +85,13 @@ class Facebook_Login_Public {
 	 * @since   1.0.0
 	 */
 	public function add_button_to_login_form() {
-		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt=""/></a>');
+		$redirect = apply_filters( 'flp/redirect_url', ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+
+		// if we are in login page we don't want to redirect back to it
+		if ( isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) )
+			$redirect = apply_filters( 'flp/redirect_url', '');
+
+		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt=""/></a>');
 	}
 
 	/**

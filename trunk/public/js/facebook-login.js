@@ -5,7 +5,7 @@
         e.preventDefault();
         var $form_obj       = $( this ).parents('form') || false,
             $this           = $( this),
-            $redirect_to    = $form_obj.find('input[name="redirect_to"]').val() || false;
+            $redirect_to    = $form_obj.find('input[name="redirect_to"]').val() || $(this).data('redirect');
         $this.addClass('loading');
         $('.fbl_error').remove();
 
