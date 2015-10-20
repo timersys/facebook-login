@@ -151,7 +151,6 @@ class Facebook_Login_Public {
 		// Map our FB response fields to the correct user fields as found in wp_update_user
 		$user = apply_filters( 'fbl/user_data_login', array(
 			'fb_user_id' => $fb_user['id'],
-			'user_login' => $this->generateUsername( $fb_user ),
 			'first_name' => $fb_user['first_name'],
 			'last_name'  => $fb_user['last_name'],
 			'user_email' => $fb_user['email'],
@@ -178,6 +177,8 @@ class Facebook_Login_Public {
 				wp_update_user( array( 'ID' => $user_id, 'user_email' => $user['user_email'] ) );
 
 		} else {
+			// generate a new username
+			$user['user_login'] = $this->generateUsername( $fb_user );
 			$user_id = $this->register_user( $user );
 			if( !is_wp_error($user_id) ) {
 				update_user_meta( $user_id, '_fb_user_id', $user['fb_user_id'] );
@@ -290,15 +291,36 @@ class Facebook_Login_Public {
 
 	/**
 	 * Generated a friendly username for facebook users
-	 * @param $fb_user
+	 * @param $user
 	 *
 	 * @return string
 	 */
-	private function generateUsername( $fb_user ) {
-		$email = explode( "@", $fb_user['email'] );
-		$id    = substr( $fb_user['id'], 0, 5 );
+	private function generateUsername( $user ) {
+		global $wpdb;
 
-		return $email[0] . '_' . $id;
+		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) ) {
+			$username = strtolower( "{$user['first_name']}.{$user['last_name']}" );
+			// replace regional characters
+			$username = iconv( 'UTF-8', 'ASCII//TRANSLIT//IGNORE', $username );
+		} else {
+			// use email
+			$email    = explode( '@', $user['user_email'] );
+			$username = strtolower( $email[0] );
+		}
+
+		// remove special characters
+		$username = trim( preg_replace( '/[^a-z0-9]+/', '.', $username ), '.' );
+
+		// "generate" unique suffix
+		$suffix = $wpdb->get_var( $wpdb->prepare(
+			"SELECT 1 + SUBSTR(user_login, %d) FROM $wpdb->users WHERE user_login REGEXP %s ORDER BY 1 DESC LIMIT 1",
+			strlen( $username ) + 2, '^' . $username . '(\.[0-9]+)?$' ) );
+
+		if( !empty( $suffix ) ) {
+			$username .= ".{$suffix}";
+		}
+
+		return $username;
 	}
 
 }
