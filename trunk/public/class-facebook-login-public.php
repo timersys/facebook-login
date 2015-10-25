@@ -300,8 +300,6 @@ class Facebook_Login_Public {
 
 		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) ) {
 			$username = strtolower( "{$user['first_name']}.{$user['last_name']}" );
-			// replace regional characters
-			$username = iconv( 'UTF-8', 'ASCII//TRANSLIT//IGNORE', $username );
 		} else {
 			// use email
 			$email    = explode( '@', $user['user_email'] );
@@ -309,7 +307,7 @@ class Facebook_Login_Public {
 		}
 
 		// remove special characters
-		$username = trim( preg_replace( '/[^a-z0-9]+/', '.', $username ), '.' );
+		$username = sanitize_user( $username, true );
 
 		// "generate" unique suffix
 		$suffix = $wpdb->get_var( $wpdb->prepare(
