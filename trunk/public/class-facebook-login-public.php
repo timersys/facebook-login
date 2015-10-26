@@ -178,8 +178,9 @@ class Facebook_Login_Public {
 
 		} else {
 			// generate a new username
-			$user['user_login'] = $this->generateUsername( $fb_user );
-			$user_id = $this->register_user( $user );
+			$user['user_login'] = apply_filters( 'fbl/generateUsername', $this->generateUsername( $fb_user ) );
+
+			$user_id = $this->register_user( apply_filters( 'fbl/user_data_register',$user ) );
 			if( !is_wp_error($user_id) ) {
 				update_user_meta( $user_id, '_fb_user_id', $user['fb_user_id'] );
 				$meta_updated = true;
@@ -202,6 +203,7 @@ class Facebook_Login_Public {
 	 * @return int user id
 	 */
 	private function register_user( $user ) {
+
 		return wp_insert_user( $user );
 	}
 
@@ -279,13 +281,12 @@ class Facebook_Login_Public {
 				get_users(
 					array(
 						'meta_key'      => '_fb_user_id',
-						'meta_value'    => $user['user_login'],
+						'meta_value'    => $user['fb_user_id'],
 						'number'        => 1,
 						'count_total'   => false
 					)
 				)
 			);
-
 		return $user_data;
 	}
 
@@ -297,6 +298,8 @@ class Facebook_Login_Public {
 	 */
 	private function generateUsername( $user ) {
 		global $wpdb;
+
+		do_action( 'flb/generateUsername', $user );
 
 		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) ) {
 			$username = strtolower( "{$user['first_name']}.{$user['last_name']}" );
