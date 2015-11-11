@@ -243,7 +243,7 @@ class Facebook_Login_Public {
 		if ( $user && is_object( $user ) ) {
 			$user_id = $user->data->ID;
 
-			// We can use username as ID but checking the usermeta we are sure this is a facebook user
+			// get avatar with facebook id
 			if ( $fb_id = get_user_meta( $user_id, '_fb_user_id', true ) ) {
 
 				$fb_url = 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $size . '&height=' . $size;
@@ -256,6 +256,104 @@ class Facebook_Login_Public {
 		return $avatar;
 	}
 
+	/**
+	 * Filters an avatar URL wrapped in an <img> element.
+	 *
+	 * @since BuddyPress (1.1.0)
+	 *
+	 * @param array $params Array of parameters for the request.
+	 * @param $item_id
+	 * @param $avatar_dir
+	 * @param string $html_css_id ID attribute for avatar.
+	 * @param string $html_width Width attribute for avatar.
+	 * @param string $html_height Height attribtue for avatar.
+	 * @param string $avatar_folder_url Avatar URL path.
+	 * @param string $avatar_folder_dir Avatar dir path.
+	 *
+	 * @return string
+	 */
+	public function bp_core_fetch_avatar( $img, $params, $item_id, $avatar_dir, $html_css_id, $html_width, $html_height, $avatar_folder_url, $avatar_folder_dir ) {
+
+		$avatar_url = $this->bp_core_fetch_avatar_url('', $params);
+
+		if( empty( $avatar_url ) )
+			return;
+
+		// Get a fallback for the 'alt' parameter, create html output.
+		if ( empty( $params['alt'] ) ) {
+			$params['alt'] = __( 'Profile Photo', 'buddypress' );
+		}
+		$html_alt = ' alt="' . esc_attr( $params['alt'] ) . '"';
+
+		// Filter image title and create html string.
+		$html_title = '';
+
+		/**
+		 * Filters the title attribute value to be applied to avatar.
+		 *
+		 * @since BuddyPress (1.5.0)
+		 *
+		 * @param string $value  Title to be applied to avatar.
+		 * @param string $value  ID of avatar item being requested.
+		 * @param string $value  Avatar type being requested.
+		 * @param array  $params Array of parameters for the request.
+		 */
+		$params['title'] = apply_filters( 'bp_core_avatar_title', $params['title'], $params['item_id'], $params['object'], $params );
+
+		if ( ! empty( $params['title'] ) ) {
+			$html_title = ' title="' . esc_attr( $params['title'] ) . '"';
+		}
+
+		// Use an alias to leave the param unchanged
+		$avatar_classes = $params['class'];
+		if ( ! is_array( $avatar_classes ) ) {
+			$avatar_classes = explode( ' ', $avatar_classes );
+		}
+
+		// merge classes
+		$avatar_classes = array_merge( $avatar_classes, array(
+			$params['object'] . '-' . $params['item_id'] . '-avatar',
+			'avatar-' . $params['width'],
+		) );
+
+		// Sanitize each class
+		$avatar_classes = array_map( 'sanitize_html_class', $avatar_classes );
+
+		// populate the class attribute
+		$html_class = ' class="' . join( ' ', $avatar_classes ) . ' photo"';
+
+		return '<img src="' . $avatar_url . '"' . $html_class . $html_css_id  . $html_width . $html_height . $html_alt . $html_title . ' />';
+	}
+
+	/**
+	 * Filters a locally uploaded avatar URL.
+	 *
+	 * @since BuddyPress (1.2.5)
+	 *
+	 * @param string $avatar_url URL for a locally uploaded avatar.
+	 * @param array $params Array of parameters for the request.
+	 *
+	 * @return string|void
+	 */
+	public function bp_core_fetch_avatar_url( $avatar_url, $params) {
+
+		$bp = buddypress();
+
+		// If avatars are disabled for the root site, obey that request and bail
+		if ( ! $bp->avatar->show_avatars ) {
+			return;
+		}
+		// only for users
+		if( $params['object'] != 'user' )
+			return;
+
+		$fb_id = get_user_meta( $params['item_id'], '_fb_user_id', true );
+
+		if ( empty($fb_id) )
+			return;
+
+		return 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $params['width'] . '&height=' . $params['height'];
+	}
 	/**
 	 * Function to send ajax response in script
 	 * @param $status

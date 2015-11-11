@@ -44,7 +44,7 @@ Please contribute on [https://github.com/timersys/facebook-login](https://github
 1. Install plugin zip using `/wp-admin/plugin-install.php` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to Settings -> Facebook Login and enter your facebook app ID
-4. Place `<?php do_action('<?php do_action('facebook_login_button');?>` in your templates if you need it somewhere else than wp-login.php
+4. Place `<?php do_action('facebook_login_button');?>` in your templates if you need it somewhere else than wp-login.php
 
 
 == Frequently Asked Questions ==

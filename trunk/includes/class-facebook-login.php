@@ -177,6 +177,8 @@ class Facebook_Login {
 		}
 		if(  !empty( $this->opts['fb_avatars'] ) )
 			$this->loader->add_filter( 'get_avatar', $plugin_public, 'use_fb_avatars',10, 5 );
+			$this->loader->add_filter( 'bp_core_fetch_avatar', $plugin_public, 'bp_core_fetch_avatar', 10, 9 );
+			$this->loader->add_filter( 'bp_core_fetch_avatar_url', $plugin_public, 'bp_core_fetch_avatar_url', 10, 2 );
 
 	}
 
