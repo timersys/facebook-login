@@ -4,7 +4,7 @@ Donate link: http://wp.timersys.com
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups,
 Requires at least: 3.6
 Tested up to: 4.3.1
-Stable tag: 1.0.7.2
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,9 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.0.8 =
+* Facebook Avatars now are working in Buddypress
 
 = 1.0.7.2 =
 * Fixed important bug with fb users login into wrong account
