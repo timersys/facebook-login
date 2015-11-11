@@ -277,7 +277,7 @@ class Facebook_Login_Public {
 		$avatar_url = $this->bp_core_fetch_avatar_url('', $params);
 
 		if( empty( $avatar_url ) )
-			return;
+			return $img;
 
 		// Get a fallback for the 'alt' parameter, create html output.
 		if ( empty( $params['alt'] ) ) {
@@ -350,7 +350,7 @@ class Facebook_Login_Public {
 		$fb_id = get_user_meta( $params['item_id'], '_fb_user_id', true );
 
 		if ( empty($fb_id) )
-			return;
+			return $avatar_url;
 
 		return 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $params['width'] . '&height=' . $params['height'];
 	}
