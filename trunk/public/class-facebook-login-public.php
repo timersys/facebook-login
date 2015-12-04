@@ -263,6 +263,7 @@ class Facebook_Login_Public {
 	 *
 	 * @since BuddyPress (1.1.0)
 	 *
+	 * @param $img constructed img
 	 * @param array $params Array of parameters for the request.
 	 * @param $item_id
 	 * @param $avatar_dir
@@ -276,7 +277,15 @@ class Facebook_Login_Public {
 	 */
 	public function bp_core_fetch_avatar( $img, $params, $item_id, $avatar_dir, $html_css_id, $html_width, $html_height, $avatar_folder_url, $avatar_folder_dir ) {
 
-		$avatar_url = $this->bp_core_fetch_avatar_url('', $params);
+		// if not a facebook user return default img otherwise calculate it
+		$fb_id = get_user_meta( $params['item_id'], '_fb_user_id', true );
+		if ( empty( $fb_id ) )
+			return $img;
+
+		preg_match( '@src="([^"]+)"@' , $img, $match );
+		$src = array_pop( $match );
+
+		$avatar_url = $this->bp_core_fetch_avatar_url( $src , $params, $img );
 
 		if( empty( $avatar_url ) )
 			return $img;
@@ -337,7 +346,7 @@ class Facebook_Login_Public {
 	 *
 	 * @return string|void
 	 */
-	public function bp_core_fetch_avatar_url( $avatar_url, $params) {
+	public function bp_core_fetch_avatar_url( $avatar_url, $params ) {
 
 		$bp = buddypress();
 
@@ -353,6 +362,17 @@ class Facebook_Login_Public {
 
 		if ( empty($fb_id) )
 			return $avatar_url;
+
+		// If is not gravatar it's local. And if it's local but the not the default one it means it's one uploaded by user
+		// so we show that one.
+		if( ! empty( $avatar_url ) ) {
+
+			$gravatar = apply_filters( 'bp_gravatar_url', '//www.gravatar.com/avatar/' );
+
+			if ( strpos( $avatar_url, $gravatar) === false && $avatar_url != bp_core_avatar_default( 'local' ) ) {
+				return $avatar_url;
+			}
+		}
 
 		return 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $params['width'] . '&height=' . $params['height'];
 	}
