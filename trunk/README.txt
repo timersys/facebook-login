@@ -12,13 +12,13 @@ Facebook Login. Simple adds a facebook login button into wp-login.php and let yo
 
 == Description ==
 
-If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin.
+If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin. Lightweight plugin that won't bloat your site with unnecessary functions. Developer friendly and easy to expand.
+
 If you need to add a facebook login in your template use the following code:
+`<?php do_action('facebook_login_button');?>`
 
 = Configuration =
 Once you install the plugin, you need to configure it. Please follow [this guide](https://timersys.com/facebook-login/docs/configuration/)
-
-`<?php do_action('<?php do_action('facebook_login_button');?>`
 
 > <strong>Premium Version</strong><br>
 >
