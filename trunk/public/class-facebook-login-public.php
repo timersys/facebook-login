@@ -183,7 +183,8 @@ class Facebook_Login_Public {
 			$user['user_login'] = apply_filters( 'fbl/generateUsername', $this->generateUsername( $fb_user ) );
 
 			$user_id = $this->register_user( apply_filters( 'fbl/user_data_register',$user ) );
-			if( !is_wp_error($user_id) ) {
+			if( !is_wp_error( $user_id ) ) {
+				$this->notify_new_registration( $user_id );
 				update_user_meta( $user_id, '_fb_user_id', $user['fb_user_id'] );
 				$meta_updated = true;
 				$status = array( 'success' => $user_id);
@@ -205,7 +206,7 @@ class Facebook_Login_Public {
 	 * @return int user id
 	 */
 	private function register_user( $user ) {
-
+		do_action( 'fbl/register_user', $user );
 		return wp_insert_user( $user );
 	}
 
@@ -263,6 +264,7 @@ class Facebook_Login_Public {
 	 *
 	 * @since BuddyPress (1.1.0)
 	 *
+	 * @param $img constructed img
 	 * @param array $params Array of parameters for the request.
 	 * @param $item_id
 	 * @param $avatar_dir
@@ -276,7 +278,15 @@ class Facebook_Login_Public {
 	 */
 	public function bp_core_fetch_avatar( $img, $params, $item_id, $avatar_dir, $html_css_id, $html_width, $html_height, $avatar_folder_url, $avatar_folder_dir ) {
 
-		$avatar_url = $this->bp_core_fetch_avatar_url('', $params);
+		// if not a facebook user return default img otherwise calculate it
+		$fb_id = get_user_meta( $params['item_id'], '_fb_user_id', true );
+		if ( empty( $fb_id ) )
+			return $img;
+
+		preg_match( '@src="([^"]+)"@' , $img, $match );
+		$src = array_pop( $match );
+
+		$avatar_url = $this->bp_core_fetch_avatar_url( $src , $params, $img );
 
 		if( empty( $avatar_url ) )
 			return $img;
@@ -337,7 +347,7 @@ class Facebook_Login_Public {
 	 *
 	 * @return string|void
 	 */
-	public function bp_core_fetch_avatar_url( $avatar_url, $params) {
+	public function bp_core_fetch_avatar_url( $avatar_url, $params ) {
 
 		$bp = buddypress();
 
@@ -353,6 +363,17 @@ class Facebook_Login_Public {
 
 		if ( empty($fb_id) )
 			return $avatar_url;
+
+		// If is not gravatar it's local. And if it's local but the not the default one it means it's one uploaded by user
+		// so we show that one.
+		if( ! empty( $avatar_url ) ) {
+
+			$gravatar = apply_filters( 'bp_gravatar_url', '//www.gravatar.com/avatar/' );
+
+			if ( strpos( $avatar_url, $gravatar) === false && $avatar_url != bp_core_avatar_default( 'local' ) ) {
+				return $avatar_url;
+			}
+		}
 
 		return 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $params['width'] . '&height=' . $params['height'];
 	}
@@ -399,7 +420,7 @@ class Facebook_Login_Public {
 	private function generateUsername( $user ) {
 		global $wpdb;
 
-		do_action( 'flb/generateUsername', $user );
+		do_action( 'fbl/generateUsername', $user );
 
 		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) ) {
 			$username = strtolower( "{$user['first_name']}.{$user['last_name']}" );
@@ -422,6 +443,19 @@ class Facebook_Login_Public {
 		}
 
 		return $username;
+	}
+
+	/**
+	 * Send notifications to admin and bp if active
+	 * @param $user_id
+	 */
+	private function notify_new_registration( $user_id ) {
+		// Notify the site admin of a new user registration.
+		wp_new_user_notification( $user_id );
+		do_action( 'fbl/notify_new_registration', $user_id );
+		// bp notifications
+		// fires xprofile_sync_wp_profile, bp_core_new_user_activity, bp_core_clear_member_count_caches
+		do_action( 'bp_core_activated_user', $user_id );
 	}
 
 }
