@@ -9,13 +9,17 @@
     background: url("../img/fb-icon.png") no-repeat 10px center, -ms-linear-gradient(top, #3b5998, #2b4170);
     background: url("../img/fb-icon.png") no-repeat 10px center, -webkit-linear-gradient(top, #3b5998, #2b4170);
     background-size: 25px 25px, cover;
-    height: 45px;
-    line-height: 45px;
+    line-height: 1;
     display: block;
     padding-left: 50px;
     color: #fff !important;
-    text-decoration: none;
-    margin-bottom: 16px;
+    text-decoration: none !important;
+    transition: opacity .3s ease-in;
+    text-shadow: 1px 1px 0px #000;
+    opacity: .90;
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto 16px;
 }
 a.css-fbl:hover{
     background-color: #062c70;
@@ -24,17 +28,23 @@ a.css-fbl:hover{
     background: url("../img/fb-icon.png") no-repeat 10px center, -webkit-linear-gradient(top, #3b5998, #062C70);
     background-size: 25px 25px, cover;
     color: #FDFDFD;
-    text-shadow: 1px 1px 0px #000;
+    opacity: 1;
+}
+a.css-fbl div {
+    height: 45px;
+    display: table-cell;
+    vertical-align: middle;
 }
 .css-fbl img{
     display: none;
     width: 20px;
-    float: right;
-    margin: 12px;
+    right: 6px;
+    top: 31%;
+    position: absolute;
     height: auto;
 }
 .css-fbl.loading img{
-    display: block;
+    display: block !important;
 }
 .fbl_error {
     float: left;
