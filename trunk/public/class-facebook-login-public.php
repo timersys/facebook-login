@@ -243,6 +243,19 @@ class Facebook_Login_Public {
 		} else {
 			$user = get_user_by( 'email', $id_or_email );
 		}
+		// If somehow $id hasn't been assigned, return the result of get_avatar.
+		if ( empty( $user ) ) {
+			return !empty( $avatar ) ? $avatar : $default;
+		}
+
+		// Image alt tag.
+		if ( empty( $alt ) ) {
+			if ( function_exists( 'bp_core_get_user_displayname' ) )
+				$alt = sprintf( __( 'Profile photo of %s', 'buddypress' ), bp_core_get_user_displayname( $id ) );
+			else
+				$alt = __( 'Facebook Profile photo', 'fbl' );
+		}
+
 		if ( $user && is_object( $user ) ) {
 			$user_id = $user->data->ID;
 
@@ -250,7 +263,7 @@ class Facebook_Login_Public {
 			if ( $fb_id = get_user_meta( $user_id, '_fb_user_id', true ) ) {
 
 				$fb_url = 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $size . '&height=' . $size;
-				$avatar = "<img alt='facebook-profile-picture' src='{$fb_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+				$avatar = "<img alt='{$alt}' src='{$fb_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
 
 			}
 
