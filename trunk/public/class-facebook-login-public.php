@@ -91,7 +91,7 @@ class Facebook_Login_Public {
 		if ( isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) )
 			$redirect = apply_filters( 'flp/redirect_url', '');
 
-		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt=""/></a>');
+		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'"><div>'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt=""/></div></a>');
 	}
 
 	/**
@@ -458,4 +458,11 @@ class Facebook_Login_Public {
 		do_action( 'bp_core_activated_user', $user_id );
 	}
 
+	/**
+	 * Add fb button is user is not logged
+	 */
+	public function add_fbl_button() {
+		if( ! is_user_logged_in() )
+			do_action( 'facebook_login_button' );
+	}
 }
