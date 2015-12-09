@@ -43,7 +43,7 @@ a.css-fbl div {
     position: absolute;
     height: auto;
 }
-.css-fbl.loading img{
+.css-fbl.fbl-loading img{
     display: block !important;
 }
 .fbl_error {

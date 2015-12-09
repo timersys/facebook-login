@@ -6,7 +6,7 @@
         var $form_obj       = $( this ).parents('form') || false,
             $this           = $( this),
             $redirect_to    = $form_obj.find('input[name="redirect_to"]').val() || $(this).data('redirect');
-        $this.addClass('loading');
+        $this.addClass('fbl-loading');
         $('.fbl_error').remove();
         try {
             FB.login(function (response) {
@@ -38,7 +38,7 @@
                                     location.href = fbl.site_url;
                                 }
                             } else if (data && data.error) {
-                                $this.removeClass('loading');
+                                $this.removeClass('fbl-loading');
                                 if ($form_obj.length) {
                                     $form_obj.append('<p class="fbl_error">' + data.error + '</p>');
                                 } else {
@@ -48,13 +48,13 @@
                             }
                         },
                         error: function (data) {
-                            $this.removeClass('loading');
+                            $this.removeClass('fbl-loading');
                             $form_obj.append('<p class="fbl_error">' + data + '</p>');
                         }
                     });
 
                 } else {
-                    $this.removeClass('loading');
+                    $this.removeClass('fbl-loading');
                     console.log('User canceled login or did not fully authorize.');
                 }
             }, {
@@ -63,7 +63,7 @@
                 auth_type: 'rerequest'
             });
         }catch(err) {
-            $this.removeClass('loading');
+            $this.removeClass('fbl-loading');
             alert('Facebook Init is not loaded. Check that you are not running any blocking software or that you have tracking protection turned off if you use Firefox');
         }
     });
