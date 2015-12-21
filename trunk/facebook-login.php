@@ -65,8 +65,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-facebook-login.php';
  */
 function run_facebook_login() {
 
-	$plugin = new Facebook_Login();
+	$plugin = Facebook_Login::instance();
 	$plugin->run();
-
+	return $plugin;
 }
-run_facebook_login();
+$GLOBALS['fbl'] = run_facebook_login();

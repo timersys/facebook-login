@@ -66,6 +66,57 @@ class Facebook_Login {
 	 * @var array of plugin settings
 	 */
 	protected $opts;
+	/**
+	 * Plugin Instance
+	 * @since 1.0.0
+	 * @var The Fbl plugin instance
+	 */
+	protected static $_instance = null;
+
+	/**
+	 * Main Fbl Instance
+	 *
+	 * Ensures only one instance of WSI is loaded or can be loaded.
+	 *
+	 * @since 1.0.0
+	 * @static
+	 * @see WSI()
+	 * @return Fbl - Main instance
+	 */
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	/**
+	 * Cloning is forbidden.
+	 * @since 1.0.0
+	 */
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wsi' ), '2.1' );
+	}
+
+	/**
+	 * Unserializing instances of this class is forbidden.
+	 * @since 1.0.0
+	 */
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wsi' ), '2.1' );
+	}
+
+	/**
+	 * Auto-load in-accessible properties on demand.
+	 * @param mixed $key
+	 * @since 1.0.0
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		if ( in_array( $key, array( 'payment_gateways', 'shipping', 'mailer', 'checkout' ) ) ) {
+			return $this->$key();
+		}
+	}
 
 	/**
 	 * Define the core functionality of the plugin.
