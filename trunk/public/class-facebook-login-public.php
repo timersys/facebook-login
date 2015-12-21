@@ -436,7 +436,7 @@ class Facebook_Login_Public {
 		do_action( 'fbl/generateUsername', $user );
 
 		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) ) {
-			$username = strtolower( "{$user['first_name']}.{$user['last_name']}" );
+			$username = strtolower( trim( $user['first_name'] ) .'.'. trim( $user['last_name'] ) );
 		} else {
 			// use email
 			$email    = explode( '@', $user['user_email'] );
