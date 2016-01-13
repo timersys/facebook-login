@@ -368,9 +368,10 @@ class Facebook_Login_Public {
 		if ( ! $bp->avatar->show_avatars ) {
 			return;
 		}
+
 		// only for users
 		if( $params['object'] != 'user' )
-			return;
+			return $avatar_url;
 
 		$fb_id = get_user_meta( $params['item_id'], '_fb_user_id', true );
 
