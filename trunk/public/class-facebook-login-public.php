@@ -437,26 +437,26 @@ class Facebook_Login_Public {
 		do_action( 'fbl/generateUsername', $user );
 
 		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) ) {
-			$username = strtolower( trim( $user['first_name'] ) .'.'. trim( $user['last_name'] ) );
+			$username = strtolower( trim( $user['first_name'] ) .'-'. trim( $user['last_name'] ) );
 		} else {
 			// use email
 			$email    = explode( '@', $user['user_email'] );
 			$username = strtolower( $email[0] );
 		}
 
-		// remove special characters
-		$username = sanitize_user( $username, true );
+		// remove special characters and converts . into -
+		$username = sanitize_title( sanitize_user( $username, true ) );
 
 		// "generate" unique suffix
 		$suffix = $wpdb->get_var( $wpdb->prepare(
 			"SELECT 1 + SUBSTR(user_login, %d) FROM $wpdb->users WHERE user_login REGEXP %s ORDER BY 1 DESC LIMIT 1",
-			strlen( $username ) + 2, '^' . $username . '(\.[0-9]+)?$' ) );
+			strlen( $username ) + 2, '^' . $username . '(-[0-9]+)?$' ) );
 
 		if( !empty( $suffix ) ) {
-			$username .= ".{$suffix}";
+			$username .= "-{$suffix}";
 		}
 
-		return $username;
+		return apply_filters( 'fbl/generateUsername', $username );
 	}
 
 	/**
