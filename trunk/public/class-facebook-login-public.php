@@ -77,6 +77,10 @@ class Facebook_Login_Public {
 			'ajaxurl'      => admin_url('admin-ajax.php'),
 			'site_url'     => home_url(),
 			'scopes'       => 'email,public_profile',
+			'appId'        => $this->opts['fb_id'],
+			'l18n'         => array(
+				'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', $this->plugin_name ),
+			)
 		)));
 	}
 
@@ -408,6 +412,10 @@ class Facebook_Login_Public {
 	 * @return false|WP_User
 	 */
 	private function getUserBy( $user ) {
+
+		// if the user is logged in, pass curent user
+		if( is_user_logged_in() )
+			return wp_get_current_user();
 
 		$user_data = get_user_by('email', $user['user_email']);
 
