@@ -419,17 +419,17 @@ class Facebook_Login_Public {
 
 		$user_data = get_user_by('email', $user['user_email']);
 
-		if( ! $user_data )
-			$user_data = reset(
-				get_users(
-					array(
-						'meta_key'      => '_fb_user_id',
-						'meta_value'    => $user['fb_user_id'],
-						'number'        => 1,
-						'count_total'   => false
-					)
+		if( ! $user_data ) {
+			$users     = get_users(
+				array(
+					'meta_key'    => '_fb_user_id',
+					'meta_value'  => $user['fb_user_id'],
+					'number'      => 1,
+					'count_total' => false
 				)
 			);
+			$user_data = reset( $users );
+		}
 		return $user_data;
 	}
 
