@@ -428,7 +428,8 @@ class Facebook_Login_Public {
 					'count_total' => false
 				)
 			);
-			$user_data = reset( $users );
+			if( is_array( $users ) )
+				$user_data = reset( $users );
 		}
 		return $user_data;
 	}
