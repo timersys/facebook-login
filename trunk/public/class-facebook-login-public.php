@@ -445,16 +445,16 @@ class Facebook_Login_Public {
 
 		do_action( 'fbl/generateUsername', $user );
 
-		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) ) {
-			$username = strtolower( trim( $user['first_name'] ) .'-'. trim( $user['last_name'] ) );
-		} else {
+		$username = '';
+
+		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) )
+			$username = $this->cleanUsername( trim( $user['first_name'] ) .'-'. trim( $user['last_name'] ) );
+
+		if( empty( $username) || '-' == $username ) {
 			// use email
 			$email    = explode( '@', $user['user_email'] );
-			$username = strtolower( $email[0] );
+			$username = $this->cleanUsername( $email[0] );
 		}
-
-		// remove special characters and converts . into -
-		$username = sanitize_title( sanitize_user( $username, true ) );
 
 		// "generate" unique suffix
 		$suffix = $wpdb->get_var( $wpdb->prepare(
@@ -468,6 +468,15 @@ class Facebook_Login_Public {
 		return apply_filters( 'fbl/generateUsername', $username );
 	}
 
+	/**
+	 * Simple pass sanitazing functions to a given string
+	 * @param $username
+	 *
+	 * @return string
+	 */
+	private function cleanUsername( $username ) {
+		return sanitize_title( sanitize_user(  $username ) );
+	}
 	/**
 	 * Send notifications to admin and bp if active
 	 * @param $user_id
