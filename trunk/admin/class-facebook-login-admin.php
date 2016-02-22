@@ -100,15 +100,7 @@ class Facebook_Login_Admin {
 				'site_url'     => home_url(),
 				'scopes'       => 'email,public_profile',
 				'l18n'         => array(
-					'username'              => __( 'Username' ),
-					'username_or_email'     => __( 'Username or Email' ),
-					'submit_register_text'  => __( 'Register' ),
-					'submit_login_text'     => __( 'Login' ),
-					'submit_getnewpass_text'=> __( 'Get New Password'),
-					'errors_fill_email'     => __( 'Please enter your email', $this->plugin_name ),
-					'errors_fill_username'  => __( 'Please enter your username', $this->plugin_name ),
-					'errors_invalid_email'  => __( 'Please enter a valid email', $this->plugin_name ),
-					'errors_fill_pass'      => __( 'Please enter your password', $this->plugin_name ),
+					'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', $this->plugin_name ),
 				)
 			)));
 		}
