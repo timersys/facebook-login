@@ -141,8 +141,8 @@ class Facebook_Login_Public {
 			'access_token'  =>  $_POST['fb_response']['authResponse']['accessToken'],
 		), 'https://graph.facebook.com/v2.4/'.$_POST['fb_response']['authResponse']['userID'] );
 
-		$fb_response = wp_remote_get( $fb_url );
-
+		$fb_response = wp_remote_get( $fb_url , array( 'timeout' => 30 ) );
+		
 		if( is_wp_error( $fb_response ) )
 			$this->ajax_response( array( 'error' => $fb_response->get_error_message() ) );
 
