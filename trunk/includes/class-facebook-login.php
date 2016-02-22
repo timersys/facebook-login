@@ -28,6 +28,11 @@
  * @author     Damian Logghe <info@timersys.com>
  */
 class Facebook_Login {
+	/**
+	 * Public class where all hooks are added
+	 * @var Facebook_Login_Public   $fbl
+	 */
+	public $fbl;
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -61,6 +66,57 @@ class Facebook_Login {
 	 * @var array of plugin settings
 	 */
 	protected $opts;
+	/**
+	 * Plugin Instance
+	 * @since 1.0.0
+	 * @var The Fbl plugin instance
+	 */
+	protected static $_instance = null;
+
+	/**
+	 * Main Fbl Instance
+	 *
+	 * Ensures only one instance of WSI is loaded or can be loaded.
+	 *
+	 * @since 1.0.0
+	 * @static
+	 * @see WSI()
+	 * @return Fbl - Main instance
+	 */
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	/**
+	 * Cloning is forbidden.
+	 * @since 1.0.0
+	 */
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wsi' ), '2.1' );
+	}
+
+	/**
+	 * Unserializing instances of this class is forbidden.
+	 * @since 1.0.0
+	 */
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wsi' ), '2.1' );
+	}
+
+	/**
+	 * Auto-load in-accessible properties on demand.
+	 * @param mixed $key
+	 * @since 1.0.0
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		if ( in_array( $key, array( 'payment_gateways', 'shipping', 'mailer', 'checkout' ) ) ) {
+			return $this->$key();
+		}
+	}
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -148,6 +204,9 @@ class Facebook_Login {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu_items');
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'create_settings');
 		$this->loader->add_action( 'admin_notices', $notices, 'rate_plugin' );
+		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'profile_buttons' );
+		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'profile_buttons' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'admin_scripts');
 	}
 
 	/**
@@ -159,26 +218,31 @@ class Facebook_Login {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Facebook_Login_Public( $this->get_plugin_name(), $this->get_version() );
+		$this->fbl = new Facebook_Login_Public( $this->get_plugin_name(), $this->get_version() );
 
 		if( !empty( $this->opts['fb_id'] ) ) {
-			$this->loader->add_action( 'login_form', $plugin_public, 'add_button_to_login_form' );
-			$this->loader->add_action( 'register_form', $plugin_public, 'add_button_to_login_form' );
-			$this->loader->add_action( 'login_head', $plugin_public, 'add_fb_scripts' );
-			$this->loader->add_action( 'login_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-			$this->loader->add_action( 'login_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-			$this->loader->add_action( 'wp_ajax_fbl_facebook_login', $plugin_public, 'login_or_register_user' );
-			$this->loader->add_action( 'wp_ajax_nopriv_fbl_facebook_login', $plugin_public, 'login_or_register_user' );
-			$this->loader->add_action( 'facebook_login_button', $plugin_public, 'add_button_to_login_form' );
-			$this->loader->add_action( 'facebook_login_button', $plugin_public, 'add_fb_scripts' );
-			$this->loader->add_action( 'facebook_login_button', $plugin_public, 'enqueue_scripts' );
-			$this->loader->add_action( 'facebook_login_button', $plugin_public, 'enqueue_styles' );
-
+			$this->loader->add_action( 'login_form', $this->fbl, 'print_button' );
+			$this->loader->add_action( 'register_form', $this->fbl, 'print_button' );
+			$this->loader->add_action( 'login_head', $this->fbl, 'add_fb_scripts' );
+			$this->loader->add_action( 'login_enqueue_scripts', $this->fbl, 'enqueue_styles' );
+			$this->loader->add_action( 'login_enqueue_scripts', $this->fbl, 'enqueue_scripts' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $this->fbl, 'enqueue_scripts' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $this->fbl, 'enqueue_styles' );
+			$this->loader->add_action( 'wp_ajax_fbl_facebook_login', $this->fbl, 'login_or_register_user' );
+			$this->loader->add_action( 'wp_ajax_nopriv_fbl_facebook_login', $this->fbl, 'login_or_register_user' );
+			$this->loader->add_action( 'facebook_login_button', $this->fbl, 'print_button' );
+			$this->loader->add_action( 'facebook_login_button', $this->fbl, 'add_fb_scripts' );
+			$this->loader->add_action( 'facebook_disconnect_button', $this->fbl, 'print_disconnect_button' );
+			$this->loader->add_action( 'bp_before_account_details_fields', $this->fbl, 'add_fbl_button' );
+			$this->loader->add_action( 'bp_core_general_settings_before_submit', $this->fbl, 'profile_buttons' );
+			$this->loader->add_action( 'init', $this->fbl, 'disconnect_facebook' );
 		}
 		if(  !empty( $this->opts['fb_avatars'] ) ) {
-			$this->loader->add_filter( 'get_avatar', $plugin_public, 'use_fb_avatars', 10, 5 );
-			$this->loader->add_filter( 'bp_core_fetch_avatar', $plugin_public, 'bp_core_fetch_avatar', 10, 9 );
-			$this->loader->add_filter( 'bp_core_fetch_avatar_url', $plugin_public, 'bp_core_fetch_avatar_url', 10, 2 );
+			// if bp is here we let them filter get avatar and we filter them instead
+			if( !function_exists('bp_core_fetch_avatar') )
+				$this->loader->add_filter( 'get_avatar', $this->fbl, 'use_fb_avatars', 10, 5 );
+			$this->loader->add_filter( 'bp_core_fetch_avatar', $this->fbl, 'bp_core_fetch_avatar', 10, 9 );
+			$this->loader->add_filter( 'bp_core_fetch_avatar_url', $this->fbl, 'bp_core_fetch_avatar_url', 10, 2 );
 		}
 	}
 

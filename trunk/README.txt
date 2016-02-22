@@ -1,21 +1,24 @@
 === Facebook Login ===
 Contributors: timersys
 Donate link: http://wp.timersys.com
-Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups,
+Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars
 Requires at least: 3.6
-Tested up to: 4.4
-Stable tag: 1.0.10
+Tested up to: 4.4.2
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Facebook Login. Simple adds a facebook login button into wp-login.php and let you use fb avatars, period.
+Facebook Login. Simple adds a facebook login button into wp-login.php and let you use facebook avatars, period.
 
 == Description ==
 
 If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin. Lightweight plugin that won't bloat your site with unnecessary functions. Developer friendly and easy to expand.
 
-If you need to add a facebook login in your template use the following code:
+If you need to add a facebook login in your template or link a Facebook account to an existing profile use the following code:
 `<?php do_action('facebook_login_button');?>`
+
+If you want to show a disconnect button to remove facebook connection from a user profile and avatar use this:
+`<?php do_action('facebook_disconnect_button');?>`
 
 = Configuration =
 Once you install the plugin, you need to configure it. Please follow [this guide](https://timersys.com/facebook-login/docs/configuration/)
@@ -26,7 +29,8 @@ Once you install the plugin, you need to configure it. Please follow [this guide
 >
 > * Powerful Login / Registration AJAX sidebar widget,
 > * Also available with a shortcode and php template function
-> * Compatible with WooCommerce and Easy Digital Downloads checkout pages
+> * Compatible with WooCommerce
+> * Easy Digital Downloads checkout pages
 > * Compatible with BuddyPress
 > * Login widget in Popups
 > * Premium support
@@ -35,7 +39,6 @@ Once you install the plugin, you need to configure it. Please follow [this guide
 = GitHub =
 
 Please contribute on [https://github.com/timersys/facebook-login](https://github.com/timersys/facebook-login)
-
 
 
 == Installation ==
@@ -59,6 +62,14 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.1 =
+* Added Chrome iOS workaround
+* Improved username generation
+* Added connect / disconnect button on user profile
+* Fixed bug with avatars in groups
+* Code improvement and minor bugfixes
+
 
 = 1.0.10 =
 * Custom Avatars in bp are working now along with facebook ones

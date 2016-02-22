@@ -77,6 +77,10 @@ class Facebook_Login_Public {
 			'ajaxurl'      => admin_url('admin-ajax.php'),
 			'site_url'     => home_url(),
 			'scopes'       => 'email,public_profile',
+			'appId'        => $this->opts['fb_id'],
+			'l18n'         => array(
+				'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', $this->plugin_name ),
+			)
 		)));
 	}
 
@@ -84,14 +88,26 @@ class Facebook_Login_Public {
 	 * Print the button on login page
 	 * @since   1.0.0
 	 */
-	public function add_button_to_login_form() {
+	public function print_button() {
 		$redirect = apply_filters( 'flp/redirect_url', ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 
 		// if we are in login page we don't want to redirect back to it
 		if ( isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) )
 			$redirect = apply_filters( 'flp/redirect_url', '');
 
-		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt=""/></a>');
+		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'"><div>'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+	}
+
+	/**
+	 * Prints disconnect button to remove fb from user profile
+	 * @since 1.1
+	 */
+	public function print_disconnect_button( ) {
+
+		$redirect = apply_filters( 'flp/disconnect_redirect_url', ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+
+		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+
 	}
 
 	/**
@@ -137,7 +153,7 @@ class Facebook_Login_Public {
 			'access_token'  =>  $_POST['fb_response']['authResponse']['accessToken'],
 		), 'https://graph.facebook.com/v2.4/'.$_POST['fb_response']['authResponse']['userID'] );
 
-		$fb_response = wp_remote_get( $fb_url );
+		$fb_response = wp_remote_get( $fb_url , array( 'timeout' => 30 ) );
 
 		if( is_wp_error( $fb_response ) )
 			$this->ajax_response( array( 'error' => $fb_response->get_error_message() ) );
@@ -243,6 +259,19 @@ class Facebook_Login_Public {
 		} else {
 			$user = get_user_by( 'email', $id_or_email );
 		}
+		// If somehow $id hasn't been assigned, return the result of get_avatar.
+		if ( empty( $user ) ) {
+			return !empty( $avatar ) ? $avatar : $default;
+		}
+
+		// Image alt tag.
+		if ( empty( $alt ) ) {
+			if ( function_exists( 'bp_core_get_user_displayname' ) )
+				$alt = sprintf( __( 'Profile photo of %s', 'buddypress' ), bp_core_get_user_displayname( $id ) );
+			else
+				$alt = __( 'Facebook Profile photo', 'fbl' );
+		}
+
 		if ( $user && is_object( $user ) ) {
 			$user_id = $user->data->ID;
 
@@ -250,7 +279,7 @@ class Facebook_Login_Public {
 			if ( $fb_id = get_user_meta( $user_id, '_fb_user_id', true ) ) {
 
 				$fb_url = 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $size . '&height=' . $size;
-				$avatar = "<img alt='facebook-profile-picture' src='{$fb_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+				$avatar = "<img alt='{$alt}' src='{$fb_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
 
 			}
 
@@ -355,9 +384,10 @@ class Facebook_Login_Public {
 		if ( ! $bp->avatar->show_avatars ) {
 			return;
 		}
+
 		// only for users
 		if( $params['object'] != 'user' )
-			return;
+			return $avatar_url;
 
 		$fb_id = get_user_meta( $params['item_id'], '_fb_user_id', true );
 
@@ -395,19 +425,24 @@ class Facebook_Login_Public {
 	 */
 	private function getUserBy( $user ) {
 
+		// if the user is logged in, pass curent user
+		if( is_user_logged_in() )
+			return wp_get_current_user();
+
 		$user_data = get_user_by('email', $user['user_email']);
 
-		if( ! $user_data )
-			$user_data = reset(
-				get_users(
-					array(
-						'meta_key'      => '_fb_user_id',
-						'meta_value'    => $user['fb_user_id'],
-						'number'        => 1,
-						'count_total'   => false
-					)
+		if( ! $user_data ) {
+			$users     = get_users(
+				array(
+					'meta_key'    => '_fb_user_id',
+					'meta_value'  => $user['fb_user_id'],
+					'number'      => 1,
+					'count_total' => false
 				)
 			);
+			if( is_array( $users ) )
+				$user_data = reset( $users );
+		}
 		return $user_data;
 	}
 
@@ -422,29 +457,38 @@ class Facebook_Login_Public {
 
 		do_action( 'fbl/generateUsername', $user );
 
-		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) ) {
-			$username = strtolower( "{$user['first_name']}.{$user['last_name']}" );
-		} else {
+		$username = '';
+
+		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) )
+			$username = $this->cleanUsername( trim( $user['first_name'] ) .'-'. trim( $user['last_name'] ) );
+
+		if( empty( $username) || '-' == $username ) {
 			// use email
 			$email    = explode( '@', $user['user_email'] );
-			$username = strtolower( $email[0] );
+			$username = $this->cleanUsername( $email[0] );
 		}
-
-		// remove special characters
-		$username = sanitize_user( $username, true );
 
 		// "generate" unique suffix
 		$suffix = $wpdb->get_var( $wpdb->prepare(
 			"SELECT 1 + SUBSTR(user_login, %d) FROM $wpdb->users WHERE user_login REGEXP %s ORDER BY 1 DESC LIMIT 1",
-			strlen( $username ) + 2, '^' . $username . '(\.[0-9]+)?$' ) );
+			strlen( $username ) + 2, '^' . $username . '(-[0-9]+)?$' ) );
 
 		if( !empty( $suffix ) ) {
-			$username .= ".{$suffix}";
+			$username .= "-{$suffix}";
 		}
 
-		return $username;
+		return apply_filters( 'fbl/generateUsername', $username );
 	}
 
+	/**
+	 * Simple pass sanitazing functions to a given string
+	 * @param $username
+	 *
+	 * @return string
+	 */
+	private function cleanUsername( $username ) {
+		return sanitize_title( sanitize_user(  $username ) );
+	}
 	/**
 	 * Send notifications to admin and bp if active
 	 * @param $user_id
@@ -458,4 +502,54 @@ class Facebook_Login_Public {
 		do_action( 'bp_core_activated_user', $user_id );
 	}
 
+	/**
+	 * Add fb button is user is not logged
+	 */
+	public function add_fbl_button() {
+		if( ! is_user_logged_in() )
+			do_action( 'facebook_login_button' );
+	}
+
+	/**
+	 * Add extra section on Bp Settings Area
+	 */
+	public function profile_buttons( ) {
+		global $current_user;
+		get_currentuserinfo();
+		if( ! isset( $current_user->ID ) )
+			return;
+		?>
+		<div id="fbl_connection">
+		<label for="fbl_connection"><?php _e("Facebook connection", $this->plugin_name); ?></label><?php
+		$fb_id = get_user_meta( $current_user->ID, '_fb_user_id' );
+		if( $fb_id ) {
+			_e( 'Your profile is currently linked to your Facebook account. Click the button below to remove connection and avatar', $this->plugin_name );
+			do_action('facebook_disconnect_button');
+		} else {
+			_e( 'Link your facebook account to your profile.', $this->plugin_name );
+			echo '<br>';
+			do_action('facebook_login_button');
+		}
+		echo '</div>';
+	}
+
+	/**
+	 * Check if disconnect button was pressed
+	 *
+	 * @return bool
+	 */
+	public function disconnect_facebook( ) {
+		global $current_user;
+		get_currentuserinfo();
+		if( ! isset( $current_user->ID ) )
+			return;
+
+		if ( !current_user_can( 'edit_user', $current_user->ID ) || ! isset( $_GET['fbl_disconnect'] ) || ! wp_verify_nonce( $_GET['fb_nonce'], 'fbl_disconnect' ) )
+			return;
+
+		delete_user_meta( $current_user->ID, '_fb_user_id' );
+		// refresh page
+		wp_redirect( esc_url( $_GET['redirect'] ) );
+		exit();
+	}
 }

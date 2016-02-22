@@ -79,5 +79,47 @@ class Facebook_Login_Admin {
 		$settings->register();
 	}
 
+	/**
+	 *
+	 * Register and enqueue scripts.
+	 *
+	 * @since     1.1
+	 *
+	 * @return    null    Return early if no settings page is registered.
+	 */
+	public function admin_scripts() {
 
+		global $pagenow;
+		if (  ( isset($_GET['page']) && 'facebook_login' == $_GET['page']  ) || $pagenow == 'profile.php' ) {
+
+			wp_enqueue_style( 'fbl-admin-css', plugins_url( 'assets/css/admin.css', __FILE__ ) , '', $this->version );
+			wp_enqueue_style( 'fbl-public-css', plugins_url( 'public/css/facebook-login.css', dirname( __FILE__ ) ) , '', $this->version );
+			wp_enqueue_script( 'fbl-public-js', plugins_url( 'public/js/facebook-login.js', dirname( __FILE__ ) ) , '', $this->version );
+			wp_localize_script( 'fbl-public-js', 'fbl', apply_filters( 'fbl/js_vars', array(
+				'ajaxurl'      => admin_url('admin-ajax.php'),
+				'site_url'     => home_url(),
+				'scopes'       => 'email,public_profile',
+				'l18n'         => array(
+					'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', $this->plugin_name ),
+				)
+			)));
+		}
+	}
+
+	/**
+	 * Add extra section on wp-admin/profile.php
+	 * @param $user
+	 * @since 1.1
+	 */
+	public function profile_buttons( $user ) {
+		?><h3><?php _e("Facebook connection", "blank"); ?></h3><?php
+		$fb_id = get_user_meta( $user->ID, '_fb_user_id' );
+		if( $fb_id ) {
+			echo '<p>' . __( 'Your profile is currently linked to your Facebook account. Click the button below to remove connection and avatar', $this->plugin_name ) . '</p>';
+			do_action('facebook_disconnect_button');
+		} else {
+			echo '<p>' . __( 'Link your facebook account to your profile.', $this->plugin_name ) . '</p>';
+			do_action('facebook_login_button');
+		}
+	}
 }
