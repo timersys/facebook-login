@@ -204,6 +204,9 @@ class Facebook_Login {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu_items');
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'create_settings');
 		$this->loader->add_action( 'admin_notices', $notices, 'rate_plugin' );
+		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'profile_buttons' );
+		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'profile_buttons' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'admin_scripts');
 	}
 
 	/**
@@ -218,19 +221,21 @@ class Facebook_Login {
 		$this->fbl = new Facebook_Login_Public( $this->get_plugin_name(), $this->get_version() );
 
 		if( !empty( $this->opts['fb_id'] ) ) {
-			$this->loader->add_action( 'login_form', $this->fbl, 'add_button_to_login_form' );
-			$this->loader->add_action( 'register_form', $this->fbl, 'add_button_to_login_form' );
+			$this->loader->add_action( 'login_form', $this->fbl, 'print_button' );
+			$this->loader->add_action( 'register_form', $this->fbl, 'print_button' );
 			$this->loader->add_action( 'login_head', $this->fbl, 'add_fb_scripts' );
 			$this->loader->add_action( 'login_enqueue_scripts', $this->fbl, 'enqueue_styles' );
 			$this->loader->add_action( 'login_enqueue_scripts', $this->fbl, 'enqueue_scripts' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $this->fbl, 'enqueue_scripts' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $this->fbl, 'enqueue_styles' );
 			$this->loader->add_action( 'wp_ajax_fbl_facebook_login', $this->fbl, 'login_or_register_user' );
 			$this->loader->add_action( 'wp_ajax_nopriv_fbl_facebook_login', $this->fbl, 'login_or_register_user' );
-			$this->loader->add_action( 'facebook_login_button', $this->fbl, 'add_button_to_login_form' );
+			$this->loader->add_action( 'facebook_login_button', $this->fbl, 'print_button' );
 			$this->loader->add_action( 'facebook_login_button', $this->fbl, 'add_fb_scripts' );
-			$this->loader->add_action( 'facebook_login_button', $this->fbl, 'enqueue_scripts' );
-			$this->loader->add_action( 'facebook_login_button', $this->fbl, 'enqueue_styles' );
+			$this->loader->add_action( 'facebook_disconnect_button', $this->fbl, 'print_disconnect_button' );
 			$this->loader->add_action( 'bp_before_account_details_fields', $this->fbl, 'add_fbl_button' );
-
+			$this->loader->add_action( 'bp_core_general_settings_before_submit', $this->fbl, 'profile_buttons' );
+			$this->loader->add_action( 'init', $this->fbl, 'disconnect_facebook' );
 		}
 		if(  !empty( $this->opts['fb_avatars'] ) ) {
 			// if bp is here we let them filter get avatar and we filter them instead

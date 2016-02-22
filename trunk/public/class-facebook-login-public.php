@@ -88,7 +88,7 @@ class Facebook_Login_Public {
 	 * Print the button on login page
 	 * @since   1.0.0
 	 */
-	public function add_button_to_login_form() {
+	public function print_button() {
 		$redirect = apply_filters( 'flp/redirect_url', ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 
 		// if we are in login page we don't want to redirect back to it
@@ -96,6 +96,18 @@ class Facebook_Login_Public {
 			$redirect = apply_filters( 'flp/redirect_url', '');
 
 		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'"><div>'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt=""/></div></a>');
+	}
+
+	/**
+	 * Prints disconnect button to remove fb from user profile
+	 * @since 1.1
+	 */
+	public function print_disconnect_button( ) {
+
+		$redirect = apply_filters( 'flp/disconnect_redirect_url', ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+
+		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+
 	}
 
 	/**
@@ -142,7 +154,7 @@ class Facebook_Login_Public {
 		), 'https://graph.facebook.com/v2.4/'.$_POST['fb_response']['authResponse']['userID'] );
 
 		$fb_response = wp_remote_get( $fb_url , array( 'timeout' => 30 ) );
-		
+
 		if( is_wp_error( $fb_response ) )
 			$this->ajax_response( array( 'error' => $fb_response->get_error_message() ) );
 
@@ -496,5 +508,48 @@ class Facebook_Login_Public {
 	public function add_fbl_button() {
 		if( ! is_user_logged_in() )
 			do_action( 'facebook_login_button' );
+	}
+
+	/**
+	 * Add extra section on Bp Settings Area
+	 */
+	public function profile_buttons( ) {
+		global $current_user;
+		get_currentuserinfo();
+		if( ! isset( $current_user->ID ) )
+			return;
+		?>
+		<div id="fbl_connection">
+		<label for="fbl_connection"><?php _e("Facebook connection", $this->plugin_name); ?></label><?php
+		$fb_id = get_user_meta( $current_user->ID, '_fb_user_id' );
+		if( $fb_id ) {
+			_e( 'Your profile is currently linked to your Facebook account. Click the button below to remove connection and avatar', $this->plugin_name );
+			do_action('facebook_disconnect_button');
+		} else {
+			_e( 'Link your facebook account to your profile.', $this->plugin_name );
+			echo '<br>';
+			do_action('facebook_login_button');
+		}
+		echo '</div>';
+	}
+
+	/**
+	 * Check if disconnect button was pressed
+	 *
+	 * @return bool
+	 */
+	public function disconnect_facebook( ) {
+		global $current_user;
+		get_currentuserinfo();
+		if( ! isset( $current_user->ID ) )
+			return;
+
+		if ( !current_user_can( 'edit_user', $current_user->ID ) || ! isset( $_GET['fbl_disconnect'] ) || ! wp_verify_nonce( $_GET['fb_nonce'], 'fbl_disconnect' ) )
+			return;
+
+		delete_user_meta( $current_user->ID, '_fb_user_id' );
+		// refresh page
+		wp_redirect( esc_url( $_GET['redirect'] ) );
+		exit();
 	}
 }
