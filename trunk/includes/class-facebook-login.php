@@ -222,8 +222,9 @@ class Facebook_Login {
 
 		if( !empty( $this->opts['fb_id'] ) ) {
 			$this->loader->add_action( 'login_form', $this->fbl, 'print_button' );
+			$this->loader->add_action( 'login_form', $this->fbl, 'add_fb_scripts' );
 			$this->loader->add_action( 'register_form', $this->fbl, 'print_button' );
-			$this->loader->add_action( 'login_head', $this->fbl, 'add_fb_scripts' );
+			$this->loader->add_action( 'register_form', $this->fbl, 'add_fb_scripts' );
 			$this->loader->add_action( 'login_enqueue_scripts', $this->fbl, 'enqueue_styles' );
 			$this->loader->add_action( 'login_enqueue_scripts', $this->fbl, 'enqueue_scripts' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $this->fbl, 'enqueue_scripts' );
