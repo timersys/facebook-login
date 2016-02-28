@@ -38,6 +38,13 @@ Once you install the plugin, you need to configure it. Please follow [this guide
 > * Premium support
 >
 
+= Available Languages =
+
+* Spanish
+* English
+
+Collaborate with translations on Transifex https://www.transifex.com/timersys/facebook-login/dashboard/
+
 = GitHub =
 
 Please contribute on [https://github.com/timersys/facebook-login](https://github.com/timersys/facebook-login)
