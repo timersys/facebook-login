@@ -4,7 +4,7 @@ Donate link: http://wp.timersys.com
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars
 Requires at least: 3.6
 Tested up to: 4.4.2
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,8 @@ Facebook Login. Simple adds a facebook login button into wp-login.php and let yo
 == Description ==
 
 If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin. Lightweight plugin that won't bloat your site with unnecessary functions. Developer friendly and easy to expand.
+
+To add facebook button on a page use shortcode [fbl_login_button redirect="" hide_if_logged=""]
 
 If you need to add a facebook login in your template or link a Facebook account to an existing profile use the following code:
 `<?php do_action('facebook_login_button');?>`
@@ -62,6 +64,11 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.1.1 =
+* Fully support for russian usernames and Bp valid usernames
+* Now scripts are added with button ( fb init bug fix )
+* Added shortcode for button
 
 = 1.1 =
 * Added Chrome iOS workaround
