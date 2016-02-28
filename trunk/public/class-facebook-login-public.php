@@ -79,7 +79,7 @@ class Facebook_Login_Public {
 			'scopes'       => 'email,public_profile',
 			'appId'        => $this->opts['fb_id'],
 			'l18n'         => array(
-				'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', $this->plugin_name ),
+				'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', 'fbl' ),
 			)
 		)));
 	}
@@ -95,7 +95,7 @@ class Facebook_Login_Public {
 		if ( isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) )
 			$redirect = apply_filters( 'flp/redirect_url', '');
 
-		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'"><div>'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'"><div>'. __('Connect with Facebook', 'fbl') .'<img data-no-lazy="1" src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Facebook_Login_Public {
 
 		$redirect = apply_filters( 'flp/disconnect_redirect_url', ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 
-		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', 'fbl') .'<img data-no-lazy="1" src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
 
 	}
 
@@ -162,7 +162,7 @@ class Facebook_Login_Public {
 
 		//check if user at least provided email
 		if( empty( $fb_user['email'] ) )
-			$this->ajax_response( array( 'error' => __('We need your email in order to continue. Please try loging again. ', $this->plugin_name ) ) );
+			$this->ajax_response( array( 'error' => __('We need your email in order to continue. Please try loging again. ', 'fbl' ) ) );
 
 		// Map our FB response fields to the correct user fields as found in wp_update_user
 		$user = apply_filters( 'fbl/user_data_login', array(
@@ -176,7 +176,7 @@ class Facebook_Login_Public {
 
 		do_action( 'fbl/before_login', $user);
 
-		$status = array( 'error' => __( 'Invalid User', $this->plugin_name ) );
+		$status = array( 'error' => __( 'Invalid User', 'fbl' ) );
 
 		if ( empty( $user['fb_user_id'] ) )
 			$this->ajax_response( $status );
@@ -194,7 +194,7 @@ class Facebook_Login_Public {
 
 		} else {
 			if( ! get_option('users_can_register') && apply_filters( 'fbl/registration_disabled', true ) )
-				$this->ajax_response( array( 'error' => __( 'User registration is disabled', $this->plugin_name ) ) );
+				$this->ajax_response( array( 'error' => __( 'User registration is disabled', 'fbl' ) ) );
 			// generate a new username
 			$user['user_login'] = apply_filters( 'fbl/generateUsername', $this->generateUsername( $fb_user ) );
 
@@ -457,15 +457,22 @@ class Facebook_Login_Public {
 
 		do_action( 'fbl/generateUsername', $user );
 
-		$username = '';
-
 		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) )
 			$username = $this->cleanUsername( trim( $user['first_name'] ) .'-'. trim( $user['last_name'] ) );
 
-		if( empty( $username) || '-' == $username ) {
+		if( ! validate_username( $username ) ) {
+			$username = '';
 			// use email
-			$email    = explode( '@', $user['user_email'] );
-			$username = $this->cleanUsername( $email[0] );
+			$email    = explode( '@', $user['email'] );
+			if( validate_username( $email[0] ) )
+				$username = $this->cleanUsername( $email[0] );
+		}
+
+		// User name can't be on the blacklist or empty
+		$illegal_names = get_site_option( 'illegal_names' );
+		if ( empty( $username ) || in_array( $username, (array) $illegal_names ) ) {
+			// we used all our options to generate a nice username. Use id instead
+			$username = 'fbl_' . $user['id'];
 		}
 
 		// "generate" unique suffix
@@ -476,7 +483,6 @@ class Facebook_Login_Public {
 		if( !empty( $suffix ) ) {
 			$username .= "-{$suffix}";
 		}
-
 		return apply_filters( 'fbl/generateUsername', $username );
 	}
 
@@ -487,8 +493,9 @@ class Facebook_Login_Public {
 	 * @return string
 	 */
 	private function cleanUsername( $username ) {
-		return sanitize_title( sanitize_user(  $username ) );
+		return sanitize_title( str_replace('_','-', sanitize_user(  $username  ) ) );
 	}
+
 	/**
 	 * Send notifications to admin and bp if active
 	 * @param $user_id
@@ -520,13 +527,13 @@ class Facebook_Login_Public {
 			return;
 		?>
 		<div id="fbl_connection">
-		<label for="fbl_connection"><?php _e("Facebook connection", $this->plugin_name); ?></label><?php
+		<label for="fbl_connection"><?php _e("Facebook connection", 'fbl'); ?></label><?php
 		$fb_id = get_user_meta( $current_user->ID, '_fb_user_id' );
 		if( $fb_id ) {
-			_e( 'Your profile is currently linked to your Facebook account. Click the button below to remove connection and avatar', $this->plugin_name );
+			_e( 'Your profile is currently linked to your Facebook account. Click the button below to remove connection and avatar', 'fbl' );
 			do_action('facebook_disconnect_button');
 		} else {
-			_e( 'Link your facebook account to your profile.', $this->plugin_name );
+			_e( 'Link your facebook account to your profile.', 'fbl' );
 			echo '<br>';
 			do_action('facebook_login_button');
 		}
