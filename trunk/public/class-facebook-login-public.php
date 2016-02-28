@@ -95,7 +95,7 @@ class Facebook_Login_Public {
 		if ( isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) )
 			$redirect = apply_filters( 'flp/redirect_url', '');
 
-		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'"><div>'. __('Connect with Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.$redirect.'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'"><div>'. __('Connect with Facebook', $this->plugin_name) .'<img data-no-lazy="1" src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Facebook_Login_Public {
 
 		$redirect = apply_filters( 'flp/disconnect_redirect_url', ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 
-		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', $this->plugin_name) .'<img src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', $this->plugin_name) .'<img data-no-lazy="1" src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
 
 	}
 
@@ -457,15 +457,22 @@ class Facebook_Login_Public {
 
 		do_action( 'fbl/generateUsername', $user );
 
-		$username = '';
-
 		if( !empty( $user['first_name'] ) && !empty( $user['last_name'] ) )
 			$username = $this->cleanUsername( trim( $user['first_name'] ) .'-'. trim( $user['last_name'] ) );
 
-		if( empty( $username) || '-' == $username ) {
+		if( ! validate_username( $username ) ) {
+			$username = '';
 			// use email
-			$email    = explode( '@', $user['user_email'] );
-			$username = $this->cleanUsername( $email[0] );
+			$email    = explode( '@', $user['email'] );
+			if( validate_username( $email[0] ) )
+				$username = $this->cleanUsername( $email[0] );
+		}
+
+		// User name can't be on the blacklist or empty
+		$illegal_names = get_site_option( 'illegal_names' );
+		if ( empty( $username ) || in_array( $username, (array) $illegal_names ) ) {
+			// we used all our options to generate a nice username. Use id instead
+			$username = 'fbl_' . $user['id'];
 		}
 
 		// "generate" unique suffix
@@ -476,7 +483,6 @@ class Facebook_Login_Public {
 		if( !empty( $suffix ) ) {
 			$username .= "-{$suffix}";
 		}
-
 		return apply_filters( 'fbl/generateUsername', $username );
 	}
 
@@ -487,8 +493,9 @@ class Facebook_Login_Public {
 	 * @return string
 	 */
 	private function cleanUsername( $username ) {
-		return sanitize_title( sanitize_user(  $username ) );
+		return sanitize_title( str_replace('_','-', sanitize_user(  $username  ) ) );
 	}
+
 	/**
 	 * Send notifications to admin and bp if active
 	 * @param $user_id
