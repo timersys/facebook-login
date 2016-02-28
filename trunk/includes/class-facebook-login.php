@@ -72,6 +72,7 @@ class Facebook_Login {
 	 * @var The Fbl plugin instance
 	 */
 	protected static $_instance = null;
+	private $shortcodes;
 
 	/**
 	 * Main Fbl Instance
@@ -161,6 +162,7 @@ class Facebook_Login {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-facebook-login-loader.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-facebook-login-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-facebook-login-shortcodes.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-facebook-login-admin.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-facebook-login-settings.php';
 
@@ -168,7 +170,7 @@ class Facebook_Login {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-fbl-notices.php';
 
 		$this->loader = new Facebook_Login_Loader();
-
+		$this->shortcodes = new Facebook_Login_Shortcodes( $this->get_plugin_name(), $this->get_version() );
 	}
 
 	/**

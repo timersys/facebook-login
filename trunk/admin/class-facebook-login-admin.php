@@ -100,7 +100,7 @@ class Facebook_Login_Admin {
 				'site_url'     => home_url(),
 				'scopes'       => 'email,public_profile',
 				'l18n'         => array(
-					'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', $this->plugin_name ),
+					'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', 'fbl' ),
 				)
 			)));
 		}
@@ -115,10 +115,10 @@ class Facebook_Login_Admin {
 		?><h3><?php _e("Facebook connection", "blank"); ?></h3><?php
 		$fb_id = get_user_meta( $user->ID, '_fb_user_id' );
 		if( $fb_id ) {
-			echo '<p>' . __( 'Your profile is currently linked to your Facebook account. Click the button below to remove connection and avatar', $this->plugin_name ) . '</p>';
+			echo '<p>' . __( 'Your profile is currently linked to your Facebook account. Click the button below to remove connection and avatar', 'fbl' ) . '</p>';
 			do_action('facebook_disconnect_button');
 		} else {
-			echo '<p>' . __( 'Link your facebook account to your profile.', $this->plugin_name ) . '</p>';
+			echo '<p>' . __( 'Link your facebook account to your profile.', 'fbl' ) . '</p>';
 			do_action('facebook_login_button');
 		}
 	}
