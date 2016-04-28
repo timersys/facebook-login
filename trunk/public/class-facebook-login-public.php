@@ -521,8 +521,8 @@ class Facebook_Login_Public {
 	 * Add extra section on Bp Settings Area
 	 */
 	public function profile_buttons( ) {
-		global $current_user;
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
+
 		if( ! isset( $current_user->ID ) )
 			return;
 		?>
@@ -546,8 +546,7 @@ class Facebook_Login_Public {
 	 * @return bool
 	 */
 	public function disconnect_facebook( ) {
-		global $current_user;
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
 		if( ! isset( $current_user->ID ) )
 			return;
 
