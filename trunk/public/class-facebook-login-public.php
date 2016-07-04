@@ -147,18 +147,35 @@ class Facebook_Login_Public {
 	public function login_or_register_user() {
 		check_ajax_referer( 'facebook-nonce', 'security' );
 
-		// Get user from Facebook with given access token
-		$fb_url = add_query_arg( array(
-			'fields'        =>  'id,first_name,last_name,email,link',
-			'access_token'  =>  $_POST['fb_response']['authResponse']['accessToken'],
-		), 'https://graph.facebook.com/v2.4/'.$_POST['fb_response']['authResponse']['userID'] );
+		$access_token = isset( $_POST['fb_response']['authResponse']['accessToken'] ) ? $_POST['fb_response']['authResponse']['accessToken'] : '';
 
-		$fb_response = wp_remote_get( $fb_url , array( 'timeout' => 30 ) );
+		// Get user from Facebook with given access token
+		$fb_url = add_query_arg(
+			apply_filters( 'fbl/js_auth_data',
+				array(
+					'fields'            =>  'id,first_name,last_name,email,link',
+					'access_token'      =>  $access_token,
+				)
+			),
+			'https://graph.facebook.com/v2.4/'.$_POST['fb_response']['authResponse']['userID']
+		);
+		//
+		if( ! empty( $this->opts['app_secret'] ) ) {
+			$appsecret_proof = hash_hmac('sha256', $access_token, $this->opts['app_secret'] );
+			$fb_url = add_query_arg(
+				array(
+					'appsecret_proof' => $appsecret_proof
+				),
+				$fb_url
+			);
+		}
+
+		$fb_response = wp_remote_get( esc_url_raw( $fb_url ), array( 'timeout' => 30 ) );
 
 		if( is_wp_error( $fb_response ) )
 			$this->ajax_response( array( 'error' => $fb_response->get_error_message() ) );
 
-		$fb_user = json_decode( wp_remote_retrieve_body( $fb_response ), true );
+		$fb_user = apply_filters( 'fbl/auth_data',json_decode( wp_remote_retrieve_body( $fb_response ), true ) );
 
 		//check if user at least provided email
 		if( empty( $fb_user['email'] ) )
