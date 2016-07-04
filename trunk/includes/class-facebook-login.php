@@ -72,6 +72,16 @@ class Facebook_Login {
 	 * @var The Fbl plugin instance
 	 */
 	protected static $_instance = null;
+
+	/**
+	 * The plugin text domain for translations
+	 *
+	 * @since    1.1.3
+	 * @access   protected
+	 * @var      string    $text_domain    The string used to uniquely identify this plugin.
+	 */
+	protected $text_domain;
+
 	private $shortcodes;
 
 	/**
@@ -131,6 +141,7 @@ class Facebook_Login {
 	public function __construct() {
 
 		$this->plugin_name  = 'facebook-login';
+		$this->text_domain  = 'fbl';
 		$this->version      = FBL_VERSION;
 		$this->opts         = get_option('fbl_settings');
 
@@ -185,7 +196,7 @@ class Facebook_Login {
 	private function set_locale() {
 
 		$plugin_i18n = new Facebook_Login_i18n();
-		$plugin_i18n->set_domain( $this->get_plugin_name() );
+		$plugin_i18n->set_domain( $this->text_domain );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 

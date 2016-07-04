@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: http://wp.timersys.com
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars
 Requires at least: 3.6
-Tested up to: 4.4.2
-Stable tag: 1.1.1
+Tested up to: 4.5.3
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,7 @@ Once you install the plugin, you need to configure it. Please follow [this guide
 
 * Spanish
 * English
+* Bulgarian
 
 Collaborate with translations on Transifex https://www.transifex.com/timersys/facebook-login/dashboard/
 
@@ -71,6 +72,14 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.1.3 =
+* Added secret key field in settings to make queries more secure and fix issue that some users were having
+* Fixed textdomain to make plugin translatable with other plugins
+* Updated language files
+
+= 1.1.2 =
+* Replaced deprecated function in WP 4.5
 
 = 1.1.1 =
 * Fully support for russian usernames and Bp valid usernames

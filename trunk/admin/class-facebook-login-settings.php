@@ -5,6 +5,7 @@ class Facebook_Login_Settings {
 		$this->views    = trailingslashit( plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/' );
 		$this->fields   = array(
 			'app_id'        => 'App id',
+			'app_secret'   => __('App Secret Key', 'fbl'),
 			'fb_avatars'    => 'Facebook Avatars?',
 		);
 	}
@@ -47,6 +48,17 @@ class Facebook_Login_Settings {
 		$fb_id = isset( $opts['fb_id'] ) ? $opts['fb_id'] : '';
 		// And display the view
 		include_once $this->views . 'settings-app-id-field.php';
+	}
+
+	/**
+	 * Display Secret id field
+	 */
+	public function display_app_secret() {
+		// Now grab the options based on what we're looking for
+		$opts = get_option( 'fbl_settings' );
+		$fb_app_secret = isset( $opts['fb_app_secret'] ) ? $opts['fb_app_secret'] : '';
+		// And display the view
+		include $this->views . 'settings-app-secret-field.php';
 	}
 
 	/**
