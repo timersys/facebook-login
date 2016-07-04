@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Facebook Login\n"
-"POT-Creation-Date: 2016-02-28 11:23-0300\n"
-"PO-Revision-Date: 2016-02-28 11:32-0300\n"
+"POT-Creation-Date: 2016-07-04 10:46-0300\n"
+"PO-Revision-Date: 2016-07-04 10:47-0300\n"
 "Last-Translator: \n"
 "Language-Team: Timersys <info@timersys.com>\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -23,12 +23,12 @@ msgstr ""
 "Por favor haga login en Facebook y luego haga click en conectar nuevamente"
 
 #: admin/class-facebook-login-admin.php:115
-#: public/class-facebook-login-public.php:530
+#: public/class-facebook-login-public.php:547
 msgid "Facebook connection"
 msgstr "Integración Facebook"
 
 #: admin/class-facebook-login-admin.php:118
-#: public/class-facebook-login-public.php:533
+#: public/class-facebook-login-public.php:550
 msgid ""
 "Your profile is currently linked to your Facebook account. Click the button "
 "below to remove connection and avatar"
@@ -37,13 +37,21 @@ msgstr ""
 "botón para quitar la conexión y el avatar"
 
 #: admin/class-facebook-login-admin.php:121
-#: public/class-facebook-login-public.php:536
+#: public/class-facebook-login-public.php:553
 msgid "Link your facebook account to your profile."
 msgstr "Conecta tu cuenta de Facebook a tu perfil."
+
+#: admin/class-facebook-login-settings.php:8
+msgid "App Secret Key"
+msgstr "Clave secreta"
 
 #: admin/partials/settings-app-id-field.php:14
 msgid "Create a new app and paste App Id here"
 msgstr "Crea una nueva app y pega el App ID aquí"
+
+#: admin/partials/settings-app-secret-field.php:14
+msgid "Paste your App secret key"
+msgstr "Pega tu clave secreta"
 
 #: admin/partials/settings-fb-avatars-field.php:14
 msgid "If checked, users registered with facebook will display fb avatar"
@@ -51,7 +59,7 @@ msgstr ""
 "Si está marcado, los usuarios registrados con Facebook, usarán el avatar de "
 "Fb"
 
-#: includes/class-facebook-login.php:99 includes/class-facebook-login.php:107
+#: includes/class-facebook-login.php:109 includes/class-facebook-login.php:117
 msgid "Cheatin&#8217; huh?"
 msgstr "Trampas eh?"
 
@@ -86,27 +94,27 @@ msgstr "Login con Facebook"
 msgid "Disconnect Facebook"
 msgstr "Desconectar Facebook"
 
-#: public/class-facebook-login-public.php:165
+#: public/class-facebook-login-public.php:182
 msgid "We need your email in order to continue. Please try loging again. "
 msgstr "Necesitas su email para continuar. Por favor intentar nuevamente."
 
-#: public/class-facebook-login-public.php:179
+#: public/class-facebook-login-public.php:196
 msgid "Invalid User"
 msgstr "Usuario no válido"
 
-#: public/class-facebook-login-public.php:197
+#: public/class-facebook-login-public.php:214
 msgid "User registration is disabled"
 msgstr "El registro de nuevo usuarios esta deshabilitado"
 
-#: public/class-facebook-login-public.php:270
+#: public/class-facebook-login-public.php:287
 #, php-format
 msgid "Profile photo of %s"
 msgstr "Foto del perfil de %s"
 
-#: public/class-facebook-login-public.php:272
+#: public/class-facebook-login-public.php:289
 msgid "Facebook Profile photo"
 msgstr "Foto de perfil de Facebook"
 
-#: public/class-facebook-login-public.php:325
+#: public/class-facebook-login-public.php:342
 msgid "Profile Photo"
 msgstr "Foto de Perfil"

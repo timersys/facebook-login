@@ -42,6 +42,7 @@ Once you install the plugin, you need to configure it. Please follow [this guide
 
 * Spanish
 * English
+* Bulgarian
 
 Collaborate with translations on Transifex https://www.transifex.com/timersys/facebook-login/dashboard/
 
