@@ -204,7 +204,7 @@ class Facebook_Login_Public {
 
 		if ( $user_obj ){
 			$user_id = $user_obj->ID;
-			$status = array( 'success' => $user_id);
+			$status = array( 'success' => $user_id, 'method' => 'login');
 			// check if user email exist or update accordingly
 			if( empty( $user_obj->user_email ) )
 				wp_update_user( array( 'ID' => $user_id, 'user_email' => $user['user_email'] ) );
@@ -220,7 +220,7 @@ class Facebook_Login_Public {
 				$this->notify_new_registration( $user_id );
 				update_user_meta( $user_id, '_fb_user_id', $user['fb_user_id'] );
 				$meta_updated = true;
-				$status = array( 'success' => $user_id);
+				$status = array( 'success' => $user_id, 'method' => 'registration' );
 			}
 		}
 		if( is_numeric( $user_id ) ) {
@@ -229,7 +229,7 @@ class Facebook_Login_Public {
 				update_user_meta( $user_id, '_fb_user_id', $user['fb_user_id'] );
 			do_action( 'fbl/after_login', $user, $user_id);
 		}
-		$this->ajax_response( $status );
+		$this->ajax_response( apply_filters( 'fbl/success_status', $status ) );
 	}
 
 	/**

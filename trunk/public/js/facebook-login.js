@@ -47,7 +47,9 @@
                 url: fbl.ajaxurl,
                 success: function (data) {
                     if (data && data.success) {
-                        if ($redirect_to.length) {
+                        if( data.redirect && data.redirect.length ) {
+                            location.href = data.redirect.length;
+                        } else if ( $redirect_to.length ) {
                             location.href = $redirect_to;
                         } else {
                             location.href = fbl.site_url;
