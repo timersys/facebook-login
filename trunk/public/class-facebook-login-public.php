@@ -160,8 +160,8 @@ class Facebook_Login_Public {
 			'https://graph.facebook.com/v2.4/'.$_POST['fb_response']['authResponse']['userID']
 		);
 		//
-		if( ! empty( $this->opts['app_secret'] ) ) {
-			$appsecret_proof = hash_hmac('sha256', $access_token, $this->opts['app_secret'] );
+		if( ! empty( $this->opts['fb_app_secret'] ) ) {
+			$appsecret_proof = hash_hmac('sha256', $access_token, $this->opts['fb_app_secret'] );
 			$fb_url = add_query_arg(
 				array(
 					'appsecret_proof' => $appsecret_proof
