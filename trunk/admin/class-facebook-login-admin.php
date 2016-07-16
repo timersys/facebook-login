@@ -64,7 +64,7 @@ class Facebook_Login_Admin {
 			'options-general.php',
 			'Facebook Login',
 			'Facebook Login',
-			'edit_posts',
+			apply_filters('fbl/settings_capabilities', 'manage_options'),
 			'facebook_login',
 			array( $this, 'display_settings_page' )
 		);
