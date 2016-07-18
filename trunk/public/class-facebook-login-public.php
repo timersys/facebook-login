@@ -120,7 +120,7 @@ class Facebook_Login_Public {
 
 			window.fbAsyncInit = function() {
 				FB.init({
-					appId      : '<?php echo $this->opts['fb_id'];?>',
+					appId      : '<?php echo trim( $this->opts['fb_id'] );?>',
 					cookie     : true,  // enable cookies to allow the server to access
 					xfbml      : true,  // parse social plugins on this page
 					version    : 'v2.2' // use version 2.2
@@ -161,7 +161,7 @@ class Facebook_Login_Public {
 		);
 		//
 		if( !empty( $this->opts['fb_app_secret'] ) ) {
-			$appsecret_proof = hash_hmac('sha256', $access_token, $this->opts['fb_app_secret'] );
+			$appsecret_proof = hash_hmac('sha256', $access_token, trim( $this->opts['fb_app_secret'] ) );
 			$fb_url = add_query_arg(
 				array(
 					'appsecret_proof' => $appsecret_proof
@@ -176,6 +176,9 @@ class Facebook_Login_Public {
 			$this->ajax_response( array( 'error' => $fb_response->get_error_message() ) );
 
 		$fb_user = apply_filters( 'fbl/auth_data',json_decode( wp_remote_retrieve_body( $fb_response ), true ) );
+
+		if( isset( $fb_user['error'] ) )
+			$this->ajax_response( array( 'error' => 'Error code: '. $fb_user['error']['code'] . ' - ' . $fb_user['error']['message'] ) );
 
 		//check if user at least provided email
 		if( empty( $fb_user['email'] ) )
