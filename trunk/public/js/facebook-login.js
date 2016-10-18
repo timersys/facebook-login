@@ -48,7 +48,7 @@
                 success: function (data) {
                     if (data && data.success) {
                         if( data.redirect && data.redirect.length ) {
-                            location.href = data.redirect.length;
+                            location.href = data.redirect;
                         } else if ( $redirect_to.length ) {
                             location.href = $redirect_to;
                         } else {
