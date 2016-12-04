@@ -522,7 +522,9 @@ class Facebook_Login_Public {
 	 */
 	private function notify_new_registration( $user_id ) {
 		// Notify the site admin of a new user registration.
-		wp_new_user_notification( $user_id );
+		wp_new_user_notification( $user_id,'','admin' );
+		// notify the user
+		wp_new_user_notification( $user_id,'','user' );
 		do_action( 'fbl/notify_new_registration', $user_id );
 		// bp notifications
 		// fires xprofile_sync_wp_profile, bp_core_new_user_activity, bp_core_clear_member_count_caches
