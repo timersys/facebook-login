@@ -213,7 +213,7 @@ class Facebook_Login_Public {
 				wp_update_user( array( 'ID' => $user_id, 'user_email' => $user['user_email'] ) );
 
 		} else {
-			if( ! get_option('users_can_register') && apply_filters( 'fbl/registration_disabled', true ) )
+			if( ! get_option('users_can_register') || apply_filters( 'fbl/registration_disabled', true ) )
 				$this->ajax_response( array( 'error' => __( 'User registration is disabled', 'fbl' ) ) );
 			// generate a new username
 			$user['user_login'] = apply_filters( 'fbl/generateUsername', $this->generateUsername( $fb_user ) );
@@ -522,9 +522,9 @@ class Facebook_Login_Public {
 	 */
 	private function notify_new_registration( $user_id ) {
 		// Notify the site admin of a new user registration.
-		wp_new_user_notification( $user_id,'','admin' );
+		wp_new_user_notification( $user_id, null, 'admin' );
 		// notify the user
-		wp_new_user_notification( $user_id,'','user' );
+		wp_new_user_notification( $user_id, null, 'user' );
 		do_action( 'fbl/notify_new_registration', $user_id );
 		// bp notifications
 		// fires xprofile_sync_wp_profile, bp_core_new_user_activity, bp_core_clear_member_count_caches
