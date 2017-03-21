@@ -1,0 +1,293 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Facebook Login Pro\n"
+"POT-Creation-Date: 2016-02-28 11:54-0300\n"
+"PO-Revision-Date: 2017-01-17 10:34-0300\n"
+"Last-Translator: \n"
+"Language-Team: Timersys LLC <info@timersys.com>\n"
+"Language: ka_GE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ../.\n"
+
+#: .././admin/class-facebook-login-admin.php:139
+#: .././public/class-facebook-login-public.php:91
+msgid "Please login into facebook and then click connect button again"
+msgstr ""
+
+#: .././admin/class-facebook-login-admin.php:150
+#: .././public/class-facebook-login-public.php:761
+msgid "Facebook connection"
+msgstr "Facebook-თან კავშირი"
+
+#: .././admin/class-facebook-login-admin.php:153
+#: .././public/class-facebook-login-public.php:764
+msgid "Your profile is currently linked to your Facebook account. Click the button below to remove connection and avatar"
+msgstr ""
+
+#: .././admin/class-facebook-login-admin.php:156
+#: .././public/class-facebook-login-public.php:767
+msgid "Link your facebook account to your profile."
+msgstr ""
+
+#: .././admin/class-facebook-login-settings.php:9
+msgid "Facebook Avatars?"
+msgstr ""
+
+#: .././admin/class-facebook-login-settings.php:12
+msgid "Show on EDD Checkout?"
+msgstr ""
+
+#: .././admin/class-facebook-login-settings.php:14
+msgid "Show on Woo Checkout?"
+msgstr ""
+
+#: .././admin/class-facebook-login-settings.php:16
+msgid "Show on Ignition Deck Checkout?"
+msgstr ""
+
+#: .././admin/class-facebook-login-settings.php:75
+msgid "If checked, users registered with facebook will display fb avatar"
+msgstr ""
+
+#: .././admin/class-facebook-login-settings.php:85
+msgid "If checked, a Facebook login button will appear on WooCommerce checkout page"
+msgstr ""
+
+#: .././admin/class-facebook-login-settings.php:95
+msgid "If checked, a Facebook login button will appear on Easy Digital Downloads checkout page"
+msgstr ""
+
+#: .././admin/class-facebook-login-settings.php:105
+msgid "If checked, a Facebook login button will appear on Ignition deck checkout page"
+msgstr ""
+
+#: .././admin/partials/settings-app-id-field.php:14
+msgid "Create a new app and paste App Id here"
+msgstr ""
+
+#: .././admin/partials/settings-license-field.php:14
+msgid "You can find the license in your account page"
+msgstr ""
+
+#: .././includes/EDD_SL_Plugin_Updater.php:177
+#, php-format
+msgid "There is a new version of %1$s available. <a target=\"_blank\" class=\"thickbox\" href=\"%2$s\">View version %3$s details</a>."
+msgstr ""
+
+#: .././includes/EDD_SL_Plugin_Updater.php:184
+#, php-format
+msgid "There is a new version of %1$s available. <a target=\"_blank\" class=\"thickbox\" href=\"%2$s\">View version %3$s details</a> or <a href=\"%4$s\">update now</a>."
+msgstr ""
+
+#: .././includes/EDD_SL_Plugin_Updater.php:324
+msgid "You do not have permission to install plugin updates"
+msgstr ""
+
+#: .././includes/EDD_SL_Plugin_Updater.php:324
+msgid "Error"
+msgstr ""
+
+#: .././includes/class-facebook-login-pro.php:103
+#: .././includes/class-facebook-login-pro.php:111
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: .././includes/class-facebook-login-widget.php:37
+msgid "Facebook Login Form"
+msgstr ""
+
+#: .././includes/class-facebook-login-widget.php:38
+msgid "Displays a login / registration form"
+msgstr ""
+
+#: .././includes/class-facebook-login-widget.php:78
+msgid "Login / Register"
+msgstr "ავტორიზაცია / რეგისტრაცია"
+
+#: .././includes/class-facebook-login-widget.php:83
+msgid "Title:"
+msgstr ""
+
+#: .././includes/class-facebook-login-widget.php:87
+msgid "Hide widget when logged in ?:"
+msgstr ""
+
+#: .././includes/class-facebook-login-widget.php:91
+msgid "Redirect after URL:"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:82
+msgid "Username"
+msgstr "მომხმარებლის სახელი"
+
+#: .././public/class-facebook-login-public.php:83
+msgid "Username or Email"
+msgstr "მომხმარებლის სახელი ან ელ.ფოსტა"
+
+#: .././public/class-facebook-login-public.php:84
+#: .././public/partials/facebook-login-form.php:47
+msgid "Register"
+msgstr "დარეგისტრირდით"
+
+#: .././public/class-facebook-login-public.php:85
+msgid "Login"
+msgstr "შესვლა"
+
+#: .././public/class-facebook-login-public.php:86
+msgid "Get New Password"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:87
+msgid "Please enter your email"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:88
+msgid "Please enter your username"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:89
+msgid "Please enter a valid email"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:90
+msgid "Please enter your password"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:115
+msgid "Connect with Facebook"
+msgstr "Facebook-თან დაკავშირება"
+
+#: .././public/class-facebook-login-public.php:126
+msgid "Disconnect Facebook"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:181
+msgid "We need your email in order to continue. Please try loging again. "
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:195
+msgid "Invalid User"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:212
+#: .././public/class-facebook-login-public.php:351
+msgid "User registration is disabled"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:288
+#, php-format
+msgid "Profile photo of %s"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:290
+msgid "Facebook Profile photo"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:322
+msgid "Wrong username or password"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:362
+msgid "Registration complete. You can now log in."
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:364
+msgid "Something went wrong: "
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:381
+msgid "Wrong username or email"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:396
+msgid "Check your e-mail for the confirmation link."
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:453
+msgid "Someone requested that the password be reset for the following account:"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:455
+#, php-format
+msgid "Username: %s"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:456
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:457
+msgid "To reset your password, visit the following address:"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:469
+#, php-format
+msgid "[%s] Password Reset"
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:494
+msgid "The e-mail could not be sent."
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:494
+msgid "Possible reason: your host may have disabled the mail() function."
+msgstr ""
+
+#: .././public/class-facebook-login-public.php:653
+msgid "Profile Photo"
+msgstr "პროფილის სურათი"
+
+#: .././public/partials/facebook-login-form.php:21
+msgid "Or fill the form below"
+msgstr "ან შეავსეთ მოცემული ფორმა"
+
+#: .././public/partials/facebook-login-form.php:23
+msgid "Please enter your username or email address. You will receive a link to create a new password via email."
+msgstr ""
+
+#: .././public/partials/facebook-login-form.php:25
+msgid "Email or Username"
+msgstr "ელ.ფისტა ან მომხმარებლის სახელი"
+
+#: .././public/partials/facebook-login-form.php:28
+msgid "Email"
+msgstr "ელ.ფოსტა"
+
+#: .././public/partials/facebook-login-form.php:31
+msgid "Password"
+msgstr "პაროლი"
+
+#: .././public/partials/facebook-login-form.php:32
+msgid "Forgot your password?"
+msgstr "დაგავიწყდათ პაროლი?"
+
+#: .././public/partials/facebook-login-form.php:36
+msgid "Log In"
+msgstr "ავტორიზაცია"
+
+#: .././public/partials/facebook-login-form.php:42
+msgid "Need to register?"
+msgstr "გნებავთ დარეგისტრირება?"
+
+#: .././public/partials/facebook-login-form.php:44
+msgid "Already Registered?"
+msgstr "უკვე დარეგისტრირდით?"
+
+#: .././public/partials/facebook-login-form.php:47
+msgid "Log in"
+msgstr "ავტორიზაცია"
+
+#: .././public/partials/logged-user.php:25
+msgid "View Profile"
+msgstr "პროფილის ნახვა"
+
+#: .././public/partials/logged-user.php:27
+msgid "Edit Profile"
+msgstr "პროფილის რედაქტირება"
