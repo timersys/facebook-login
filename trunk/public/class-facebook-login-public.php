@@ -213,7 +213,7 @@ class Facebook_Login_Public {
 				wp_update_user( array( 'ID' => $user_id, 'user_email' => $user['user_email'] ) );
 
 		} else {
-			if( ! get_option('users_can_register') || apply_filters( 'fbl/registration_disabled', true ) )
+			if( (! get_option('users_can_register') || apply_filters( 'fbl/registration_disabled', true ) ) && ! apply_filters( 'fbl/bypass_registration_disabled', false ) )
 				$this->ajax_response( array( 'error' => __( 'User registration is disabled', 'fbl' ) ) );
 			// generate a new username
 			$user['user_login'] = apply_filters( 'fbl/generateUsername', $this->generateUsername( $fb_user ) );
