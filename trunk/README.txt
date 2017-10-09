@@ -1,6 +1,6 @@
 === Facebook Login ===
 Contributors: timersys
-Donate link: https://timersys.com
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars
 Requires at least: 3.6
 Tested up to: 4.7.3
