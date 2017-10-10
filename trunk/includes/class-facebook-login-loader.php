@@ -3,7 +3,7 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       http://wp.timersys.com
+ * @link       https://timersys.com
  * @since      1.0.0
  *
  * @package    Facebook_Login
