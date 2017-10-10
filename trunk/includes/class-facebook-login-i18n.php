@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://wp.timersys.com
+ * @link       https://timersys.com
  * @since      1.0.0
  *
  * @package    Facebook_Login

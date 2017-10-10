@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://wp.timersys.com
+ * @link       https://timersys.com
  * @since      1.0.0
  *
  * @package    Facebook_Login

@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars
 Requires at least: 3.6
-Tested up to: 4.7.3
-Stable tag: 1.1.6
+Tested up to: 4.8.2
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,13 +17,15 @@ If you just need a facebook login button in your wp-login.php to login/register 
 To add facebook button on a page use shortcode `[fbl_login_button redirect="" hide_if_logged=""]`
 
 If you need to add a facebook login in your template or link a Facebook account to an existing profile use the following code:
+
 ```<?php do_action('facebook_login_button');?>```
 
 If you want to show a disconnect button to remove facebook connection from a user profile and avatar use this:
+
 ```<?php do_action('facebook_disconnect_button');?>```
 
 = Configuration =
-Once you install the plugin, you need to configure it. Please follow [this guide](https://timersys.com/facebook-login/docs/configuration/)
+Once you install the plugin, you need to configure it. Please follow [this guide](https://timersys.com/facebook-login/docs/configuration/) . That guide is for the premium version so be aware that the only shortcode available is `[fbl_login_button redirect="" hide_if_logged=""]`
 
 > <strong>Premium Version</strong><br>
 >
@@ -46,6 +48,8 @@ Once you install the plugin, you need to configure it. Please follow [this guide
 * Vietnamese
 * Italian
 * Czech
+* Portuguese
+* Danish
 
 Collaborate with translations on Transifex https://www.transifex.com/timersys/facebook-login/dashboard/
 
@@ -75,6 +79,15 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.2 =
+* New facebook login button
+* Fixed issues with hooks on disable registration
+* New facebook api used
+* Better compatibility with jetpack
+* New languages
+* Filters to disable email notifications
+* Fixed locale of button
 
 = 1.1.6 =
 * Fixed user notifications not sending
