@@ -1,0 +1,14 @@
+<svg width="68px"  height="68px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-facebook" style="background: none;">
+    <rect ng-attr-x="{{config.x1}}" ng-attr-y="{{config.y}}" ng-attr-width="{{config.width}}" ng-attr-height="{{config.height}}" ng-attr-fill="{{config.c1}}" x="19" y="27.0441" width="12" height="45.9118" fill="#1d3f72">
+      <animate attributeName="y" calcMode="spline" values="20;35;35" keyTimes="0;0.5;1" dur="0.9" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.18000000000000002s" repeatCount="indefinite"></animate>
+      <animate attributeName="height" calcMode="spline" values="60;30;30" keyTimes="0;0.5;1" dur="0.9" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.18000000000000002s" repeatCount="indefinite"></animate>
+    </rect>
+    <rect ng-attr-x="{{config.x2}}" ng-attr-y="{{config.y}}" ng-attr-width="{{config.width}}" ng-attr-height="{{config.height}}" ng-attr-fill="{{config.c2}}" x="44" y="35" width="12" height="30" fill="#5699d2">
+      <animate attributeName="y" calcMode="spline" values="23.75;35;35" keyTimes="0;0.5;1" dur="0.9" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.09000000000000001s" repeatCount="indefinite"></animate>
+      <animate attributeName="height" calcMode="spline" values="52.5;30;30" keyTimes="0;0.5;1" dur="0.9" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.09000000000000001s" repeatCount="indefinite"></animate>
+    </rect>
+    <rect ng-attr-x="{{config.x3}}" ng-attr-y="{{config.y}}" ng-attr-width="{{config.width}}" ng-attr-height="{{config.height}}" ng-attr-fill="{{config.c3}}" x="69" y="35" width="12" height="30" fill="#d8ebf9">
+      <animate attributeName="y" calcMode="spline" values="27.5;35;35" keyTimes="0;0.5;1" dur="0.9" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="0s" repeatCount="indefinite"></animate>
+      <animate attributeName="height" calcMode="spline" values="45;30;30" keyTimes="0;0.5;1" dur="0.9" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="0s" repeatCount="indefinite"></animate>
+    </rect>
+  </svg>

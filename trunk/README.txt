@@ -17,10 +17,10 @@ If you just need a facebook login button in your wp-login.php to login/register 
 To add facebook button on a page use shortcode `[fbl_login_button redirect="" hide_if_logged=""]`
 
 If you need to add a facebook login in your template or link a Facebook account to an existing profile use the following code:
-`<?php do_action('facebook_login_button');?>`
+```<?php do_action('facebook_login_button');?>```
 
 If you want to show a disconnect button to remove facebook connection from a user profile and avatar use this:
-`<?php do_action('facebook_disconnect_button');?>`
+```<?php do_action('facebook_disconnect_button');?>```
 
 = Configuration =
 Once you install the plugin, you need to configure it. Please follow [this guide](https://timersys.com/facebook-login/docs/configuration/)

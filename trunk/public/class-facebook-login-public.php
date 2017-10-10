@@ -34,11 +34,35 @@ class Facebook_Login_Public {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.7
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
+
+	/**
+	 * Default Facebook locale
+	 *
+	 * @since 1.1.7
+	 * @var string
+	 */
+	const DEFAULT_LOCALE = 'en_US';
+	/**
+	 * Locale of the site expressed as a Facebook locale
+	 *
+	 * @since 1.1
+	 * @var string
+	 */
+	public $locale = 'en_US';
+
+	/**
+	 * List of locales supported by Facebook.
+	 * Two-letter languages codes stored in WordPress are translated to full locales; if a language has multiple country localizations place the first choice earlier in the array to make it the language default
+	 * @link https://www.facebook.com/translations/FacebookLocales.xml Facebook locales
+	 *
+	 * @since 1.1.7
+	 */
+	public static $locales = array( 'af_ZA' => true, 'ar_AR' => true, 'az_AZ' => true, 'be_BY' => true, 'bg_BG' => true, 'bn_IN' => true, 'bs_BA' => true, 'ca_ES' => true, 'cs_CZ' => true, 'cy_GB' => true, 'da_DK' => true, 'de_DE' => true, 'el_GR' => true, 'en_US' => true, 'en_GB' => true, 'eo_EO' => true, 'es_ES' => true, 'es_LA' => true, 'et_EE' => true, 'eu_ES' => true, 'fa_IR' => true, 'fb_LT' => true, 'fi_FI' => true, 'fo_FO' => true, 'fr_FR' => true, 'fr_CA' => true, 'fy_NL' => true, 'ga_IE' => true, 'gl_ES' => true, 'he_IL' => true, 'hi_IN' => true, 'hr_HR' => true, 'hu_HU' => true, 'hy_AM' => true, 'id_ID' => true, 'is_IS' => true, 'it_IT' => true, 'ja_JP' => true, 'ka_GE' => true, 'km_KH' => true, 'ko_KR' => true, 'ku_TR' => true, 'la_VA' => true, 'lt_LT' => true, 'lv_LV' => true, 'mk_MK' => true, 'ml_IN' => true, 'ms_MY' => true, 'nb_NO' => true, 'ne_NP' => true, 'nl_NL' => true, 'nn_NO' => true, 'pa_IN' => true, 'pl_PL' => true, 'ps_AF' => true, 'pt_PT' => true, 'pt_BR' => true, 'ro_RO' => true, 'ru_RU' => true, 'sk_SK' => true, 'sl_SI' => true, 'sq_AL' => true, 'sr_RS' => true, 'sv_SE' => true, 'sw_KE' => true, 'ta_IN' => true, 'te_IN' => true, 'th_TH' => true, 'tl_PH' => true, 'tr_TR' => true, 'uk_UA' => true, 'vi_VN' => true, 'zh_CN' => true, 'zh_HK' => true, 'zh_TW' => true );
 
 	/**
 	 * Initialize the class and set its properties.
@@ -52,6 +76,8 @@ class Facebook_Login_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->opts         = get_option('fbl_settings');
+
+		$this->set_locale();
 	}
 
 	/**
@@ -94,8 +120,10 @@ class Facebook_Login_Public {
 		// if we are in login page we don't want to redirect back to it
 		if ( isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) && empty($_GET['redirect_to']) )
 			$redirect = '';
-
-		echo apply_filters('fbl/login_button', '<a href="#" class="css-fbl js-fbl" data-redirect="'.apply_filters( 'flp/redirect_url', $redirect).'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'"><div>'. __('Connect with Facebook', 'fbl') .'<img data-no-lazy="1" src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+		echo apply_filters('fbl/login_button',  '<div class="fbl-button" data-redirect="'.apply_filters( 'flp/redirect_url', $redirect).'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">
+			<img data-no-lazy="1" src="'.plugin_dir_url(__FILE__).'img/loading.svg'.'" alt="" class="fbl-spinner"/>
+		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
+		</div>');
 	}
 
 	/**
@@ -109,6 +137,16 @@ class Facebook_Login_Public {
 		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', 'fbl') .'<img data-no-lazy="1" src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
 
 	}
+	/**
+	 * Proactively resolve Facebook JavaScript SDK domain name asynchronously before later use
+	 *
+	 * @since 1.1.7
+	 * @link http://dev.chromium.org/developers/design-documents/dns-prefetching Chromium prefetch behavior
+	 * @link https://developer.mozilla.org/en-US/docs/Controlling_DNS_prefetching Firefox prefetch behavior
+	 */
+	public static function dns_prefetch_js_sdk() {
+		echo '<link rel="dns-prefetch" href="//connect.facebook.net" />' . "\n";
+	}
 
 	/**
 	 * Prints fb script in login head
@@ -116,29 +154,55 @@ class Facebook_Login_Public {
 	 */
 	public function add_fb_scripts(){
 		?>
-		<script>
-
+		<script type="text/javascript">
+			window.fbl_started = false;
+			function fbl_init(){
+                window.FB.init({
+                    appId      : '<?php echo trim( $this->opts['fb_id'] );?>',
+                    cookie     : true,  // enable cookies to allow the server to access
+                    xfbml      : true,  // parse social plugins on this page
+                    status     : false,
+                    autoLogAppEvents : true,
+                    version    : 'v2.10'
+                });
+                window.FB.Event.subscribe('xfbml.render', function() {
+                    FBL.renderFinish();
+                } );
+                window.fbl_started = true;
+            }
 			window.fbAsyncInit = function() {
-				FB.init({
-					appId      : '<?php echo trim( $this->opts['fb_id'] );?>',
-					cookie     : true,  // enable cookies to allow the server to access
-					xfbml      : true,  // parse social plugins on this page
-					version    : 'v2.2' // use version 2.2
-				});
-
+			    if( ! window.fbl_started )
+                    fbl_init()
 			};
 
+            var fbl_interval = window.setInterval(function(){
+                if(window.fbl_started)
+                    clearInterval(fbl_interval);
+                if( !window.fbl_started)
+                    fbl_init();
+            },100);
 			// Load the SDK asynchronously
 			(function(d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) return;
 				js = d.createElement(s); js.id = id;
-				js.src = "//connect.facebook.net/en_US/sdk.js";
+				js.src = "//connect.facebook.net/<?= $this->locale;?>/sdk.js";
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
 
 		</script><?php
 
+	}
+
+	/**
+	 * Add some args to jetpack so it won't affect normal plugin usage
+	 * @param $args
+	 */
+	public function jetpack_script_args( $args ){
+		$args['appId'] = trim( $this->opts['fb_id'] );
+		$args['status'] = true;
+		$args['cookie'] = true;
+		$args['autoLogAppEvents'] = true;
 	}
 
 	/**
@@ -157,7 +221,7 @@ class Facebook_Login_Public {
 					'access_token'      =>  $access_token,
 				)
 			),
-			'https://graph.facebook.com/v2.4/'.$_POST['fb_response']['authResponse']['userID']
+			'https://graph.facebook.com/v2.10/'.$_POST['fb_response']['authResponse']['userID']
 		);
 		//
 		if( !empty( $this->opts['fb_app_secret'] ) ) {
@@ -213,8 +277,10 @@ class Facebook_Login_Public {
 				wp_update_user( array( 'ID' => $user_id, 'user_email' => $user['user_email'] ) );
 
 		} else {
-			if( (! get_option('users_can_register') || apply_filters( 'fbl/registration_disabled', true ) ) && ! apply_filters( 'fbl/bypass_registration_disabled', false ) )
-				$this->ajax_response( array( 'error' => __( 'User registration is disabled', 'fbl' ) ) );
+			if( ! get_option('users_can_register') || apply_filters( 'fbl/registration_disabled', false ) ) {
+				if( ! apply_filters( 'fbl/bypass_registration_disabled', false ) )
+					$this->ajax_response( array( 'error' => __( 'User registration is disabled', 'fbl' ) ) );
+			}
 			// generate a new username
 			$user['user_login'] = apply_filters( 'fbl/generateUsername', $this->generateUsername( $fb_user ) );
 
@@ -581,5 +647,75 @@ class Facebook_Login_Public {
 		// refresh page
 		wp_redirect( esc_url( $_GET['redirect'] ) );
 		exit();
+	}
+
+	/**
+	 * Get locale and set a valid facebook one
+	 * Taken from https://github.com/Automattic/facebook-wordpress/blob/master/facebook.php
+	 */
+	private function set_locale() {
+		$transient_key = 'facebook_locale';
+		$locale = get_transient( $transient_key );
+		if ( $locale ) {
+			$this->locale = $locale;
+			return;
+		}
+		// sanitize the locale. e.g. en-US to en_US
+		// filter the result in case a site would like to override
+		$locale = apply_filters( 'fb_locale', self::sanitize_locale( get_locale() ) );
+		// validate our sanitized value and a possible filter override
+		if ( ! self::is_valid_locale( $locale ) )
+			$locale = self::DEFAULT_LOCALE;
+		set_transient( $transient_key, $locale, 60*60*24 );
+		$this->locale = $locale;
+	}
+
+	/**
+	 * Test if a given locale is a valid Facebook locale
+	 *
+	 * @since 1.17
+	 * @see Facebook_Loader::$locales
+	 * @param @param string $locale language and localization combined in a single string. ISO 639-1 (alpha-2) language + underscore character (_) + ISO 3166-1 (alpha-2) country code. example: en_US, es_ES
+	 * @return bool true if locals in list of valid locales. else false
+	 */
+	private static function is_valid_locale( $locale ) {
+		if ( is_string( $locale ) && isset( self::$locales[$locale] ) )
+			return true;
+		return false;
+	}
+	/**
+	 * Sanitize a locale input against a list of Facebook-specific locales
+	 *
+	 * @since 1.17
+	 * @param string $locale language and localization combined in a single string. The function will attempt to convert an ISO 639-1 (alpha-2) language or a language combined with a ISO 3166-1 (alpha-2) country code separated by a dash or underscore. examples: en, en-US, en_US
+	 * @return string a Facebook-friendly locale
+	 */
+	private static function sanitize_locale( $locale ) {
+		if ( ! is_string( $locale ) )
+			return self::DEFAULT_LOCALE;
+		$locale_length = strlen( $locale );
+		if ( ! ( $locale_length === 2 || $locale_length === 5 ) )
+			return self::DEFAULT_LOCALE;
+		// convert locales like "es" to "es_ES"
+		if ( $locale_length === 2 ) {
+			if ( ! ctype_alpha( $locale ) )
+				return self::DEFAULT_LOCALE;
+			$locale = strtolower( $locale );
+			foreach( self::$locales as $facebook_locale => $exists ) {
+				if ( substr_compare( $facebook_locale, $locale, 0, 2 ) === 0 )
+					return $facebook_locale;
+			}
+			// no ISO 639-1 match found
+			return self::DEFAULT_LOCALE;
+		}
+		unset( $locale_length );
+		$lang = substr( $locale, 0, 2 );
+		if ( ! ctype_alpha( $lang ) )
+			return self::DEFAULT_LOCALE;
+		$localization = substr( $locale, 3, 2 );
+		if ( ! ctype_alpha( $localization ) )
+			return self::DEFAULT_LOCALE;
+		// rebuild based on expectations
+		return strtolower( $lang ) . '_' . strtoupper( $localization );
 	}
 }
