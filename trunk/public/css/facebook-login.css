@@ -51,3 +51,7 @@ a.css-fbl div {
     color: red;
     width: 100%;
 }
+.fbl-button{
+    text-align: center;
+    margin: 0 0 20px 0;
+}

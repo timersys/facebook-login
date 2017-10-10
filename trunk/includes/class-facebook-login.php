@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://wp.timersys.com
+ * @link       https://timersys.com
  * @since      1.0.0
  *
  * @package    Facebook_Login
@@ -234,6 +234,7 @@ class Facebook_Login {
 		$this->fbl = new Facebook_Login_Public( $this->get_plugin_name(), $this->get_version() );
 
 		if( !empty( $this->opts['fb_id'] ) ) {
+			$this->loader->add_action( 'wp_head', $this->fbl, 'dns_prefetch_js_sdk' );
 			$this->loader->add_action( 'login_form', $this->fbl, 'print_button' );
 			$this->loader->add_action( 'login_form', $this->fbl, 'add_fb_scripts' );
 			$this->loader->add_action( 'register_form', $this->fbl, 'print_button' );
@@ -250,6 +251,7 @@ class Facebook_Login {
 			$this->loader->add_action( 'bp_before_account_details_fields', $this->fbl, 'add_fbl_button' );
 			$this->loader->add_action( 'bp_core_general_settings_before_submit', $this->fbl, 'profile_buttons' );
 			$this->loader->add_action( 'init', $this->fbl, 'disconnect_facebook' );
+			$this->loader->add_filter( 'facebook_jssdk_init_options', $this->fbl, 'jetpack_script_args' );
 		}
 		if(  !empty( $this->opts['fb_avatars'] ) ) {
 			// if bp is here we let them filter get avatar and we filter them instead

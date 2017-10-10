@@ -1,37 +1,28 @@
+window.FBL = {};
+function fbl_loginCheck() {
+    window.FB.getLoginStatus( function(response) {
+        FBL.handleResponse(response);
+    } );
+}
 (function( $ ) {
 	'use strict';
-    // Thanks to Zane === zM Ajax Login & Register === for this bit
-    $( document ).on( 'click', '.js-fbl', function( e ) {
-        e.preventDefault();
-        window.fbl_button    = $(this);
-        window.fbl_button.addClass('fbl-loading');
-        $('.fbl_error').remove();
-        if( navigator.userAgent.match('CriOS') ) {
-            $('<p class="fbl_error">'+fbl.l18n.chrome_ios_alert+'</p>').insertAfter( window.fbl_button);
-            FB.getLoginStatus( handleResponse );
-        } else {
-            try {
-                FB.login(handleResponse, {
-                    scope: fbl.scopes,
-                    return_scopes: true,
-                    auth_type: 'rerequest'
-                });
-            } catch (err) {
-                window.fbl_button.removeClass('fbl-loading');
-                alert('Facebook Init is not loaded. Check that you are not running any blocking software or that you have tracking protection turned off if you use Firefox');
-            }
-        }
-    });
+	FBL.renderFinish = function () {
+        $('.fbl-spinner').hide();
+    }
 
-    var handleResponse = function( response ) {
-        var $form_obj       = window.fbl_button.parents('form') || false,
-            $redirect_to    = $form_obj.find('input[name="redirect_to"]').val() || window.fbl_button.data('redirect');
+    FBL.handleResponse = function( response ) {
+        var button          =  $('.fbl-button'),
+            $form_obj       = button.parents('form') || false,
+            $redirect_to    = $form_obj.find('input[name="redirect_to"]').val() || button.data('redirect'),
+            running         = false;
         /**
          * If we get a successful authorization response we handle it
          */
-        if (response.status == 'connected') {
-
+        if (response.status == 'connected' && ! running) {
+            running = true;
             var fb_response = response;
+            $('.fbl-spinner').fadeIn();
+            $('.fb-login-button').hide();
 
             /**
              * Send the obtained token to server side for extra checks and user data retrieval
@@ -40,7 +31,7 @@
                 data: {
                     action: "fbl_facebook_login",
                     fb_response: fb_response,
-                    security: window.fbl_button.data('fb_nonce')
+                    security: button.data('fb_nonce')
                 },
                 global: false,
                 type: "POST",
@@ -55,23 +46,26 @@
                             location.href = fbl.site_url;
                         }
                     } else if (data && data.error) {
-                        window.fbl_button.removeClass('fbl-loading');
+                        $('.fbl-spinner').hide();
+                        $('.fb-login-button').show();
+
                         if ($form_obj.length) {
                             $form_obj.append('<p class="fbl_error">' + data.error + '</p>');
                         } else {
                             // we just have a button
-                            $('<p class="fbl_error">' + data.error + '</p>').insertAfter(window.fbl_button);
+                            $('<p class="fbl_error">' + data.error + '</p>').insertAfter(button);
                         }
                     }
                 },
                 error: function (data) {
-                    window.fbl_button.removeClass('fbl-loading');
+                    $('.fbl-spinner').hide();
+                    $('.fb-login-button').show();
                     $form_obj.append('<p class="fbl_error">' + data + '</p>');
                 }
             });
 
         } else {
-            window.fbl_button.removeClass('fbl-loading');
+            button.removeClass('fbl-loading');
             if( navigator.userAgent.match('CriOS') )
                 window.open('https://www.facebook.com/dialog/oauth?client_id=' + fbl.appId + '&redirect_uri=' + document.location.href + '&scope=email,public_profile', '', null);
         }
