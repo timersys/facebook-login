@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars
 Requires at least: 3.6
 Tested up to: 4.8.2
-Stable tag: 1.2
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,10 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.2.1 =
+* Added ability to change scopes
+* Added request for new button, so if email is not provided app will ass permission again
 
 = 1.2 =
 * New facebook login button
