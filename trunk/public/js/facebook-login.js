@@ -55,6 +55,15 @@ function fbl_loginCheck() {
                             // we just have a button
                             $('<p class="fbl_error">' + data.error + '</p>').insertAfter(button);
                         }
+                        // if we had any error remove user from app so we request again permissions
+                        FB.api(
+                            "/"+data.fb.id+"/permissions",
+                            "DELETE",
+                            function (response) {
+                                if (response && !response.error) {
+                                }
+                            }
+                        );
                     }
                 },
                 error: function (data) {
@@ -67,7 +76,7 @@ function fbl_loginCheck() {
         } else {
             button.removeClass('fbl-loading');
             if( navigator.userAgent.match('CriOS') )
-                window.open('https://www.facebook.com/dialog/oauth?client_id=' + fbl.appId + '&redirect_uri=' + document.location.href + '&scope=email,public_profile', '', null);
+                window.open('https://www.facebook.com/dialog/oauth?client_id=' + fbl.appId + '&redirect_uri=' + document.location.href + '&scope='+fbl.scopes, '', null);
         }
     };
 })( jQuery );

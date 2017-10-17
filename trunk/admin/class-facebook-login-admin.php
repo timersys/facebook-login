@@ -98,7 +98,7 @@ class Facebook_Login_Admin {
 			wp_localize_script( 'fbl-public-js', 'fbl', apply_filters( 'fbl/js_vars', array(
 				'ajaxurl'      => admin_url('admin-ajax.php'),
 				'site_url'     => home_url(),
-				'scopes'       => 'email,public_profile',
+				'scopes'       => apply_filters('fbl/app_scopes','email,public_profile'),
 				'l18n'         => array(
 					'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', 'fbl' ),
 				)

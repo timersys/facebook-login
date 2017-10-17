@@ -102,7 +102,7 @@ class Facebook_Login_Public {
 		wp_localize_script( $this->plugin_name, 'fbl', apply_filters( 'fbl/js_vars', array(
 			'ajaxurl'      => admin_url('admin-ajax.php'),
 			'site_url'     => home_url(),
-			'scopes'       => 'email,public_profile',
+			'scopes'       => apply_filters('fbl/app_scopes','email,public_profile'),
 			'appId'        => $this->opts['fb_id'],
 			'l18n'         => array(
 				'chrome_ios_alert'      => __( 'Please login into facebook and then click connect button again', 'fbl' ),
@@ -122,7 +122,7 @@ class Facebook_Login_Public {
 			$redirect = '';
 		echo apply_filters('fbl/login_button',  '<div class="fbl-button" data-redirect="'.apply_filters( 'flp/redirect_url', $redirect).'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">
 			<img data-no-lazy="1" src="'.plugin_dir_url(__FILE__).'img/loading.svg'.'" alt="" class="fbl-spinner"/>
-		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
+		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-size="large" data-button-type="login_with" data-show-faces="false" data-auth-type="rerequest" data-auto-logout-link="false" data-use-continue-as="true" data-scope="'.apply_filters('fbl/app_scopes','email,public_profile').'"></div>
 		</div>');
 	}
 
@@ -246,7 +246,7 @@ class Facebook_Login_Public {
 
 		//check if user at least provided email
 		if( empty( $fb_user['email'] ) )
-			$this->ajax_response( array( 'error' => __('We need your email in order to continue. Please try loging again. ', 'fbl' ) ) );
+			$this->ajax_response( array( 'error' => __('We need your email in order to continue. Please try loging again. ', 'fbl' ),'fb' => $fb_user) );
 
 		// Map our FB response fields to the correct user fields as found in wp_update_user
 		$user = apply_filters( 'fbl/user_data_login', array(
