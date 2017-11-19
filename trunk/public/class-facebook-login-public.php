@@ -213,6 +213,8 @@ class Facebook_Login_Public {
 
 		$access_token = isset( $_POST['fb_response']['authResponse']['accessToken'] ) ? $_POST['fb_response']['authResponse']['accessToken'] : '';
 
+        do_action('fbl/save_access_token', $access_token);
+
 		// Get user from Facebook with given access token
 		$fb_url = add_query_arg(
 			apply_filters( 'fbl/js_auth_data',
