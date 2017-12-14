@@ -118,11 +118,11 @@ class Facebook_Login_Public {
 		$redirect = ! empty( $_GET['redirect_to'] ) ? esc_url($_GET['redirect_to']) : ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 		// if we are in login page we don't want to redirect back to it
-		if ( isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) && empty($_GET['redirect_to']) )
+		if ( isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) && empty( $_GET['redirect_to'] ) )
 			$redirect = '';
-		echo apply_filters('fbl/login_button',  '<div class="fbl-button" data-redirect="'.apply_filters( 'flp/redirect_url', $redirect).'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">
-			<img data-no-lazy="1" src="'.plugin_dir_url(__FILE__).'img/loading.svg'.'" alt="" class="fbl-spinner"/>
-		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-size="large" data-button-type="login_with" data-show-faces="false" data-auth-type="rerequest" data-auto-logout-link="false" data-use-continue-as="true" data-scope="'.apply_filters('fbl/app_scopes','email,public_profile').'"></div>
+		echo apply_filters( 'fbl/login_button', '<div class="fbl-button" data-redirect="' . apply_filters( 'flp/redirect_url', $redirect ) . '" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ) . '">
+			<img data-no-lazy="1" src="' . plugin_dir_url(__FILE__) . 'img/loading.svg' . '" alt="" class="fbl-spinner" />
+		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-size="' . apply_filters( 'flp/login_button/size', 'large' ) . '" data-button-type="login_with" data-show-faces="false" data-auth-type="rerequest" data-auto-logout-link="false" data-use-continue-as="true" data-scope="' . apply_filters( 'fbl/app_scopes', 'email,public_profile' ) . '"></div>
 		</div>');
 	}
 
