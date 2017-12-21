@@ -122,7 +122,7 @@ class Facebook_Login_Public {
 			$redirect = '';
 		echo apply_filters('fbl/login_button',  '<div class="fbl-button" data-redirect="'.apply_filters( 'flp/redirect_url', $redirect).'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">
 			<img data-no-lazy="1" src="'.plugin_dir_url(__FILE__).'img/loading.svg'.'" alt="" class="fbl-spinner"/>
-		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-size="large" data-button-type="login_with" data-show-faces="false" data-auth-type="rerequest" data-auto-logout-link="false" data-use-continue-as="true" data-scope="'.apply_filters('fbl/app_scopes','email,public_profile').'"></div>
+		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-size="'.apply_filters( 'flp/button/size', 'large').'" data-button-type="'.apply_filters( 'flp/button/type', 'login_with').'" data-show-faces="false" data-auth-type="rerequest" data-auto-logout-link="false" data-use-continue-as="'.apply_filters( 'flp/button/show_face', 'true').'" data-scope="'.apply_filters('fbl/app_scopes','email,public_profile').'"></div>
 		</div>');
 	}
 
