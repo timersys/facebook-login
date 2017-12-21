@@ -1,20 +1,22 @@
 === Facebook Login ===
 Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
-Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars
+Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars, buddypress
 Requires at least: 3.6
-Tested up to: 4.8.2
-Stable tag: 1.2.1
+Tested up to: 4.9.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Facebook Login. Simple adds a facebook login button into wp-login.php and let you use facebook avatars, period.
+Facebook Login. Simple adds a facebook login button into wp-login.php and let you use facebook avatars. BuddyPress compatible
 
 == Description ==
 
 If you just need a facebook login button in your wp-login.php to login/register users, this is your plugin. Lightweight plugin that won't bloat your site with unnecessary functions. Developer friendly and easy to expand.
 
-To add facebook button on a page use shortcode `[fbl_login_button redirect="" hide_if_logged=""]`
+To add facebook button on a page use shortcode `[fbl_login_button redirect="" hide_if_logged="" size="large" type="continue_with" show_face="true"]`
+
+More info about the button on https://developers.facebook.com/docs/facebook-login/web/login-button
 
 If you need to add a facebook login in your template or link a Facebook account to an existing profile use the following code:
 
@@ -79,6 +81,9 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.2.2 =
+* More shortcodes attributes and filters to change button style
 
 = 1.2.1 =
 * Added ability to change scopes
