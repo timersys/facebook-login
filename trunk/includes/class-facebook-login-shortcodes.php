@@ -53,7 +53,7 @@ class Facebook_Login_Shortcodes {
 
 	/**
 	 * Simple display facebook login button
-	 * [fbl_login_button redirect="" hide_if_logged=""]
+	 * [fbl_login_button redirect="" hide_if_logged="" size="large" type="continue_with" show_face="true"]
 	 *
 	 * @param $atts
 	 * @param $content
@@ -68,6 +68,12 @@ class Facebook_Login_Shortcodes {
 		ob_start();
 		if( ! empty ( $atts['redirect'] ) )
 			add_filter( 'flp/redirect_url' , function() use ( $atts ) { return $atts['redirect']; } );
+		if( ! empty ( $atts['size'] ) )
+			add_filter( 'flp/button/size' , function() use ( $atts ) { return $atts['size']; } );
+		if( ! empty ( $atts['type'] ) )
+			add_filter( 'flp/button/type' , function() use ( $atts ) { return $atts['type']; } );
+		if( ! empty ( $atts['show_face'] ) )
+			add_filter( 'flp/button/show_face' , function() use ( $atts ) { return $atts['show_face']; } );
 
 		do_action('facebook_login_button');
 		$html = ob_get_contents();
