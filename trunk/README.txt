@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars, buddypress
 Requires at least: 3.6
-Tested up to: 4.9.1
-Stable tag: 1.2.2
+Tested up to: 4.9.3
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,8 @@ Once you install the plugin, you need to configure it. Please follow [this guide
 * Czech
 * Portuguese
 * Danish
+* Russian
+* Ukrainian
 
 Collaborate with translations on Transifex https://www.transifex.com/timersys/facebook-login/dashboard/
 
@@ -81,6 +83,11 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 1. button
 
 == Changelog ==
+
+= 1.2.3 =
+* New languages
+* Better error handling
+* data-size filter for facebook button
 
 = 1.2.2 =
 * More shortcodes attributes and filters to change button style
