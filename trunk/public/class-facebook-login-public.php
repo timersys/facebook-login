@@ -157,18 +157,20 @@ class Facebook_Login_Public {
 		<script type="text/javascript">
 			window.fbl_started = false;
 			function fbl_init(){
-                window.FB.init({
-                    appId      : '<?php echo trim( $this->opts['fb_id'] );?>',
-                    cookie     : true,  // enable cookies to allow the server to access
-                    xfbml      : true,  // parse social plugins on this page
-                    status     : false,
-                    autoLogAppEvents : true,
-                    version    : 'v2.10'
-                });
-                window.FB.Event.subscribe('xfbml.render', function() {
-                    FBL.renderFinish();
-                } );
-                window.fbl_started = true;
+			    try{
+	                window.FB.init({
+	                    appId      : '<?php echo trim( $this->opts['fb_id'] );?>',
+	                    cookie     : true,
+	                    xfbml      : true,
+	                    status     : false,
+	                    autoLogAppEvents : true,
+	                    version    : 'v2.10'
+	                });
+	                window.FB.Event.subscribe('xfbml.render', function() {
+	                    FBL.renderFinish();
+	                } );
+	                window.fbl_started = true;
+			    } catch (e){}
             }
 			window.fbAsyncInit = function() {
 			    if( ! window.fbl_started )
@@ -181,7 +183,6 @@ class Facebook_Login_Public {
                 if( !window.fbl_started)
                     fbl_init();
             },100);
-			// Load the SDK asynchronously
 			(function(d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) return;
