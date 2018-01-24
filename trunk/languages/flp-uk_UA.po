@@ -1,0 +1,330 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Facebook Login Pro\n"
+"POT-Creation-Date: 2016-02-28 11:54-0300\n"
+"PO-Revision-Date: 2018-01-16 23:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: Karabeen\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.5\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ../.\n"
+
+#: .././admin/class-facebook-login-admin.php:139
+#: .././public/class-facebook-login-public.php:91
+msgid "Please login into facebook and then click connect button again"
+msgstr "Будь ласка, ввійдіть в Facebook і потім спробуйте знову"
+
+#: .././admin/class-facebook-login-admin.php:150
+#: .././public/class-facebook-login-public.php:761
+msgid "Facebook connection"
+msgstr "Зв’язок з Facebook"
+
+#: .././admin/class-facebook-login-admin.php:153
+#: .././public/class-facebook-login-public.php:764
+msgid ""
+"Your profile is currently linked to your Facebook account. Click the button "
+"below to remove connection and avatar"
+msgstr ""
+"Наразі ваш профіль пов’язаний з Facebook аккаунтом. Натисніть на посилання "
+"нижче щоб видалити зв’язок та фото"
+
+#: .././admin/class-facebook-login-admin.php:156
+#: .././public/class-facebook-login-public.php:767
+msgid "Link your facebook account to your profile."
+msgstr "Пов’яжіть ваш профіль з вашим Facebook аккаунтом."
+
+#: .././admin/class-facebook-login-settings.php:9
+msgid "Facebook Avatars?"
+msgstr "Фото з Facebook?"
+
+#: .././admin/class-facebook-login-settings.php:12
+msgid "Show on EDD Checkout?"
+msgstr "Показувати на сторінці оформлення замовлень EDD?"
+
+#: .././admin/class-facebook-login-settings.php:14
+msgid "Show on Woo Checkout?"
+msgstr "Показувати на сторінці оформлення замовлень Woo?"
+
+#: .././admin/class-facebook-login-settings.php:16
+msgid "Show on Ignition Deck Checkout?"
+msgstr "Показувати на сторінці оформлення замовлень Ignition Deck?"
+
+#: .././admin/class-facebook-login-settings.php:75
+msgid "If checked, users registered with facebook will display fb avatar"
+msgstr ""
+"Якщо вибрано, фото профілю Facebook буде використовуватися для користувачів "
+"зареєстрованих через Facebook"
+
+#: .././admin/class-facebook-login-settings.php:85
+msgid ""
+"If checked, a Facebook login button will appear on WooCommerce checkout page"
+msgstr ""
+"Якщо вибрано, на сторінці оформлення замовлення WooCommerce з’явиться кнопка "
+"входу через Facebook"
+
+#: .././admin/class-facebook-login-settings.php:95
+msgid ""
+"If checked, a Facebook login button will appear on Easy Digital Downloads "
+"checkout page"
+msgstr ""
+"Якщо вибрано, на сторінці оформлення замовлення Easy Digital Downloads "
+"з’явиться кнопка входу через Facebook"
+
+#: .././admin/class-facebook-login-settings.php:105
+msgid ""
+"If checked, a Facebook login button will appear on Ignition deck checkout "
+"page"
+msgstr ""
+"Якщо вибрано, на сторінці офомлення замовлення IgnitionDeck з’явиться кнопка "
+"входу через Facebook"
+
+#: .././admin/partials/settings-app-id-field.php:14
+msgid "Create a new app and paste App Id here"
+msgstr "Створіть новий додаток або вставте App ID тут"
+
+#: .././admin/partials/settings-license-field.php:14
+msgid "You can find the license in your account page"
+msgstr "Ви можете знайти ключ ліцензії на сторінці вашого аккаунту"
+
+#: .././includes/EDD_SL_Plugin_Updater.php:177
+#, php-format
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a>."
+msgstr ""
+"Доступна нова версія %1$s. <a target=\"_blank\" class=\"thickbox\" href="
+"\"%2$s\">Переглянути деталі %3$s версії</a>."
+
+#: .././includes/EDD_SL_Plugin_Updater.php:184
+#, php-format
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a> or <a href=\"%4$s"
+"\">update now</a>."
+msgstr ""
+"Доступна нова версія %1$s. <a target=\"_blank\" class=\"thickbox\" href="
+"\"%2$s\">Переглянути деталі %3$s версії</a> або <a href=\"%4$s\">встановити "
+"оновлення</a>."
+
+#: .././includes/EDD_SL_Plugin_Updater.php:324
+msgid "You do not have permission to install plugin updates"
+msgstr "Ви не маєте дозволу на встановлення оновлень плагіну"
+
+#: .././includes/EDD_SL_Plugin_Updater.php:324
+msgid "Error"
+msgstr "Помилка"
+
+#: .././includes/class-facebook-login-pro.php:103
+#: .././includes/class-facebook-login-pro.php:111
+msgid "Cheatin&#8217; huh?"
+msgstr "Махлюєш&#8217; ага?"
+
+#: .././includes/class-facebook-login-widget.php:37
+msgid "Facebook Login Form"
+msgstr "Форма входу Facebook"
+
+#: .././includes/class-facebook-login-widget.php:38
+msgid "Displays a login / registration form"
+msgstr "Відображати форму входу / реєстрації"
+
+#: .././includes/class-facebook-login-widget.php:78
+msgid "Login / Register"
+msgstr "Вхід / Реєстрація"
+
+#: .././includes/class-facebook-login-widget.php:83
+msgid "Title:"
+msgstr "Назва:"
+
+#: .././includes/class-facebook-login-widget.php:87
+msgid "Hide widget when logged in ?:"
+msgstr "Приховати віджет коли залогінений ?:"
+
+#: .././includes/class-facebook-login-widget.php:91
+msgid "Redirect after URL:"
+msgstr "Перенаправлення за URL:"
+
+#: .././public/class-facebook-login-public.php:82
+msgid "Username"
+msgstr "Ім’я користувача"
+
+#: .././public/class-facebook-login-public.php:83
+msgid "Username or Email"
+msgstr "Ім’я користувача або електронна пошта"
+
+#: .././public/class-facebook-login-public.php:84
+#: .././public/partials/facebook-login-form.php:47
+msgid "Register"
+msgstr "Реєстрація"
+
+#: .././public/class-facebook-login-public.php:85
+msgid "Login"
+msgstr "Вхід"
+
+#: .././public/class-facebook-login-public.php:86
+msgid "Get New Password"
+msgstr "Отримати новий пароль"
+
+#: .././public/class-facebook-login-public.php:87
+msgid "Please enter your email"
+msgstr "Будь ласка, введіть вашу електронну пошту"
+
+#: .././public/class-facebook-login-public.php:88
+msgid "Please enter your username"
+msgstr "Будь ласка, введіть ваше ім’я користувача"
+
+#: .././public/class-facebook-login-public.php:89
+msgid "Please enter a valid email"
+msgstr "Будь ласка, введіть дійсну електронну пошту"
+
+#: .././public/class-facebook-login-public.php:90
+msgid "Please enter your password"
+msgstr "Будь ласка, введіть ваш пароль"
+
+#: .././public/class-facebook-login-public.php:115
+msgid "Connect with Facebook"
+msgstr "Пов’язати з Facebook"
+
+#: .././public/class-facebook-login-public.php:126
+msgid "Disconnect Facebook"
+msgstr "Від’єднати Facebook"
+
+#: .././public/class-facebook-login-public.php:181
+msgid "We need your email in order to continue. Please try loging again. "
+msgstr ""
+"Щоб продовжити нам потрібна ваша електронну пошта. Будь ласка, спробуйте "
+"знову. "
+
+#: .././public/class-facebook-login-public.php:195
+msgid "Invalid User"
+msgstr "Недійсний користувач"
+
+#: .././public/class-facebook-login-public.php:212
+#: .././public/class-facebook-login-public.php:351
+msgid "User registration is disabled"
+msgstr "Реєстрація користувачів відключена"
+
+#: .././public/class-facebook-login-public.php:288
+#, php-format
+msgid "Profile photo of %s"
+msgstr "Фото профілю %s"
+
+#: .././public/class-facebook-login-public.php:290
+msgid "Facebook Profile photo"
+msgstr "Фото профілю Facebook"
+
+#: .././public/class-facebook-login-public.php:322
+msgid "Wrong username or password"
+msgstr "Невірне ім’я користувача або пароль"
+
+#: .././public/class-facebook-login-public.php:362
+msgid "Registration complete. You can now log in."
+msgstr "Зеєстрація завершена. Тепер ви можете увійти."
+
+#: .././public/class-facebook-login-public.php:364
+msgid "Something went wrong: "
+msgstr "Щось пішло не так: "
+
+#: .././public/class-facebook-login-public.php:381
+msgid "Wrong username or email"
+msgstr "Невірне ім’я користувача або електронна пошта"
+
+#: .././public/class-facebook-login-public.php:396
+msgid "Check your e-mail for the confirmation link."
+msgstr ""
+"Перевірте свою електронну пошту, на яку було надіслано посилання для "
+"підтвердження."
+
+#: .././public/class-facebook-login-public.php:453
+msgid "Someone requested that the password be reset for the following account:"
+msgstr "Хтось надіслав запит на скидання паролю для цього профілю:"
+
+#: .././public/class-facebook-login-public.php:455
+#, php-format
+msgid "Username: %s"
+msgstr "Ім’я користувача: %s"
+
+#: .././public/class-facebook-login-public.php:456
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+"Якщо ви вважаєте це помилкою, просто ігноруйте це повідомлення і нічого не "
+"станеться."
+
+#: .././public/class-facebook-login-public.php:457
+msgid "To reset your password, visit the following address:"
+msgstr "Перейдіть, будь ласка, за посиланням, щоб скинути пароль:"
+
+#: .././public/class-facebook-login-public.php:469
+#, php-format
+msgid "[%s] Password Reset"
+msgstr "[%s] Скидання паролю"
+
+#: .././public/class-facebook-login-public.php:494
+msgid "The e-mail could not be sent."
+msgstr "Не вдалось надіслати повідомлення."
+
+#: .././public/class-facebook-login-public.php:494
+msgid "Possible reason: your host may have disabled the mail() function."
+msgstr "Можлива причина: ваш хост міг відключити mail() функцію."
+
+#: .././public/class-facebook-login-public.php:653
+msgid "Profile Photo"
+msgstr "Фото профілю"
+
+#: .././public/partials/facebook-login-form.php:21
+msgid "Or fill the form below"
+msgstr "Або заповніть поля нижче"
+
+#: .././public/partials/facebook-login-form.php:23
+msgid ""
+"Please enter your username or email address. You will receive a link to "
+"create a new password via email."
+msgstr ""
+"Будь ласка, введіть ім’я користувача або електронну пошту. Ви отримаєте лист "
+"з посиланням на створення нового паролю."
+
+#: .././public/partials/facebook-login-form.php:25
+msgid "Email or Username"
+msgstr "Електронна пошта або ім’я користувача"
+
+#: .././public/partials/facebook-login-form.php:28
+msgid "Email"
+msgstr "Електронна пошта"
+
+#: .././public/partials/facebook-login-form.php:31
+msgid "Password"
+msgstr "Пароль"
+
+#: .././public/partials/facebook-login-form.php:32
+msgid "Forgot your password?"
+msgstr "Забули ваш пароль?"
+
+#: .././public/partials/facebook-login-form.php:36
+msgid "Log In"
+msgstr "Ввійти"
+
+#: .././public/partials/facebook-login-form.php:42
+msgid "Need to register?"
+msgstr "Потрібно зареєструватися?"
+
+#: .././public/partials/facebook-login-form.php:44
+msgid "Already Registered?"
+msgstr "Вже реєструвалися?"
+
+#: .././public/partials/facebook-login-form.php:47
+msgid "Log in"
+msgstr "Ввійти"
+
+#: .././public/partials/logged-user.php:25
+msgid "View Profile"
+msgstr "Переглянути профіль"
+
+#: .././public/partials/logged-user.php:27
+msgid "Edit Profile"
+msgstr "Редагувати профіль"
