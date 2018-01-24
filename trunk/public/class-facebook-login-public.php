@@ -122,7 +122,7 @@ class Facebook_Login_Public {
 			$redirect = '';
 		echo apply_filters('fbl/login_button',  '<div class="fbl-button" data-redirect="'.apply_filters( 'flp/redirect_url', $redirect).'" data-fb_nonce="' . wp_create_nonce( 'facebook-nonce' ).'">
 			<img data-no-lazy="1" src="'.plugin_dir_url(__FILE__).'img/loading.svg'.'" alt="" class="fbl-spinner"/>
-		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-size="'.apply_filters( 'flp/button/size', 'large').'" data-button-type="'.apply_filters( 'flp/button/type', 'login_with').'" data-show-faces="false" data-auth-type="rerequest" data-auto-logout-link="false" data-use-continue-as="'.apply_filters( 'flp/button/show_face', 'true').'" data-scope="'.apply_filters('fbl/app_scopes','email,public_profile').'"></div>
+		<div class="fb-login-button" data-max-rows="1" onlogin="fbl_loginCheck" data-width="'.apply_filters( 'flp/button/width', '').'" data-size="'.apply_filters( 'flp/button/size', 'large').'" data-button-type="'.apply_filters( 'flp/button/type', 'login_with').'" data-show-faces="false" data-auth-type="rerequest" data-auto-logout-link="false" data-use-continue-as="'.apply_filters( 'flp/button/show_face', 'true').'" data-scope="'.apply_filters('fbl/app_scopes','email,public_profile').'"></div>
 		</div>');
 	}
 
@@ -157,18 +157,20 @@ class Facebook_Login_Public {
 		<script type="text/javascript">
 			window.fbl_started = false;
 			function fbl_init(){
-                window.FB.init({
-                    appId      : '<?php echo trim( $this->opts['fb_id'] );?>',
-                    cookie     : true,  // enable cookies to allow the server to access
-                    xfbml      : true,  // parse social plugins on this page
-                    status     : false,
-                    autoLogAppEvents : true,
-                    version    : 'v2.10'
-                });
-                window.FB.Event.subscribe('xfbml.render', function() {
-                    FBL.renderFinish();
-                } );
-                window.fbl_started = true;
+			    try{
+	                window.FB.init({
+	                    appId      : '<?php echo trim( $this->opts['fb_id'] );?>',
+	                    cookie     : true,
+	                    xfbml      : true,
+	                    status     : false,
+	                    autoLogAppEvents : true,
+	                    version    : 'v2.10'
+	                });
+	                window.FB.Event.subscribe('xfbml.render', function() {
+	                    FBL.renderFinish();
+	                } );
+	                window.fbl_started = true;
+			    } catch (e){}
             }
 			window.fbAsyncInit = function() {
 			    if( ! window.fbl_started )
@@ -181,7 +183,6 @@ class Facebook_Login_Public {
                 if( !window.fbl_started)
                     fbl_init();
             },100);
-			// Load the SDK asynchronously
 			(function(d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) return;

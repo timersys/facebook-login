@@ -1,0 +1,331 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Facebook Login Pro\n"
+"POT-Creation-Date: 2016-02-28 11:54-0300\n"
+"PO-Revision-Date: 2018-01-16 23:17+0000\n"
+"Language-Team: Timersys LLC <info@timersys.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.5\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"Last-Translator: \n"
+"Language: ru\n"
+"X-Poedit-SearchPath-0: ../.\n"
+
+#: .././admin/class-facebook-login-admin.php:139
+#: .././public/class-facebook-login-public.php:91
+msgid "Please login into facebook and then click connect button again"
+msgstr "ожалуйста, войдите в Facebook и затем попробуйте снова"
+
+#: .././admin/class-facebook-login-admin.php:150
+#: .././public/class-facebook-login-public.php:761
+msgid "Facebook connection"
+msgstr "Связь с Facebook"
+
+#: .././admin/class-facebook-login-admin.php:153
+#: .././public/class-facebook-login-public.php:764
+msgid ""
+"Your profile is currently linked to your Facebook account. Click the button "
+"below to remove connection and avatar"
+msgstr ""
+"Сейчас ваш профиль связан с Facebook аккаунтом. Нажмите на ссылку ниже чтобы "
+"удалить связь и фото"
+
+#: .././admin/class-facebook-login-admin.php:156
+#: .././public/class-facebook-login-public.php:767
+msgid "Link your facebook account to your profile."
+msgstr "Свяжите ваш профиль с вашим Facebook аккаунтом."
+
+#: .././admin/class-facebook-login-settings.php:9
+msgid "Facebook Avatars?"
+msgstr "Фото с Facebook?"
+
+#: .././admin/class-facebook-login-settings.php:12
+msgid "Show on EDD Checkout?"
+msgstr "Показывать на странице оформления заказов EDD?"
+
+#: .././admin/class-facebook-login-settings.php:14
+msgid "Show on Woo Checkout?"
+msgstr "Показывать на странице оформления заказов Woo?"
+
+#: .././admin/class-facebook-login-settings.php:16
+msgid "Show on Ignition Deck Checkout?"
+msgstr "Показывать на странице оформления заказов Ignition Deck?"
+
+#: .././admin/class-facebook-login-settings.php:75
+msgid "If checked, users registered with facebook will display fb avatar"
+msgstr ""
+"Если выбрано, фото профиля Facebook будет использоваться для пользователей "
+"зарегистрированных через Facebook"
+
+#: .././admin/class-facebook-login-settings.php:85
+msgid ""
+"If checked, a Facebook login button will appear on WooCommerce checkout page"
+msgstr ""
+"Если выбрано, на странице оформления заказа WooCommerce появится кнопка "
+"входа через Facebook"
+
+#: .././admin/class-facebook-login-settings.php:95
+msgid ""
+"If checked, a Facebook login button will appear on Easy Digital Downloads "
+"checkout page"
+msgstr ""
+"Если выбрано, на странице оформления заказа Easy Digital Downloads появится "
+"кнопка входа через Facebook"
+
+#: .././admin/class-facebook-login-settings.php:105
+msgid ""
+"If checked, a Facebook login button will appear on Ignition deck checkout "
+"page"
+msgstr ""
+"Если выбрано, на странице оформления заказа Ignition Deck появится кнопка "
+"входа через Facebook"
+
+#: .././admin/partials/settings-app-id-field.php:14
+msgid "Create a new app and paste App Id here"
+msgstr "Создайте новое приложение или вставьте App ID здесь"
+
+#: .././admin/partials/settings-license-field.php:14
+msgid "You can find the license in your account page"
+msgstr "Вы можете найти ключ лицензии на странице вашего аккаунта"
+
+#: .././includes/EDD_SL_Plugin_Updater.php:177
+#, php-format
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a>."
+msgstr ""
+"Доступна новая версия %1$s. <a target=\"_blank\" class=\"thickbox\" href="
+"\"%2$s\">Показать детали %3$s версии</a>."
+
+#: .././includes/EDD_SL_Plugin_Updater.php:184
+#, php-format
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a> or <a href=\"%4$s"
+"\">update now</a>."
+msgstr ""
+"Доступна новая версия %1$s. <a target=\"_blank\" class=\"thickbox\" href="
+"\"%2$s\">Показать детали %3$s версии</a> или <a href=\"%4$s\">установить "
+"обновление</a>."
+
+#: .././includes/EDD_SL_Plugin_Updater.php:324
+msgid "You do not have permission to install plugin updates"
+msgstr "Вы не имеете разрешения на установку обновлений плагина"
+
+#: .././includes/EDD_SL_Plugin_Updater.php:324
+msgid "Error"
+msgstr "Ошибка"
+
+#: .././includes/class-facebook-login-pro.php:103
+#: .././includes/class-facebook-login-pro.php:111
+msgid "Cheatin&#8217; huh?"
+msgstr "Мошенничаеш&#8217; да?"
+
+#: .././includes/class-facebook-login-widget.php:37
+msgid "Facebook Login Form"
+msgstr "Форма входа Facebook"
+
+#: .././includes/class-facebook-login-widget.php:38
+msgid "Displays a login / registration form"
+msgstr "Отображать форму входа / регистрации"
+
+#: .././includes/class-facebook-login-widget.php:78
+msgid "Login / Register"
+msgstr "Вход / Регистрация"
+
+#: .././includes/class-facebook-login-widget.php:83
+msgid "Title:"
+msgstr "Название:"
+
+#: .././includes/class-facebook-login-widget.php:87
+msgid "Hide widget when logged in ?:"
+msgstr "Скрыть виджет когда залогинен ?:"
+
+#: .././includes/class-facebook-login-widget.php:91
+msgid "Redirect after URL:"
+msgstr "Перенаправления по URL:"
+
+#: .././public/class-facebook-login-public.php:82
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: .././public/class-facebook-login-public.php:83
+msgid "Username or Email"
+msgstr "Имя пользователя или электронная почта"
+
+#: .././public/class-facebook-login-public.php:84
+#: .././public/partials/facebook-login-form.php:47
+msgid "Register"
+msgstr "Регистрация"
+
+#: .././public/class-facebook-login-public.php:85
+msgid "Login"
+msgstr "Вход"
+
+#: .././public/class-facebook-login-public.php:86
+msgid "Get New Password"
+msgstr "Получить новый пароль"
+
+#: .././public/class-facebook-login-public.php:87
+msgid "Please enter your email"
+msgstr "Пожалуйста, введите вашу электронную почту"
+
+#: .././public/class-facebook-login-public.php:88
+msgid "Please enter your username"
+msgstr "Пожалуйста, введите ваше имя пользователя"
+
+#: .././public/class-facebook-login-public.php:89
+msgid "Please enter a valid email"
+msgstr "Пожалуйста, введите действительную электронную почту"
+
+#: .././public/class-facebook-login-public.php:90
+msgid "Please enter your password"
+msgstr "Пожалуйста, введите ваш пароль"
+
+#: .././public/class-facebook-login-public.php:115
+msgid "Connect with Facebook"
+msgstr "Связать с Facebook"
+
+#: .././public/class-facebook-login-public.php:126
+msgid "Disconnect Facebook"
+msgstr "Отсоединить Facebook"
+
+#: .././public/class-facebook-login-public.php:181
+msgid "We need your email in order to continue. Please try loging again. "
+msgstr ""
+"Чтобы продолжить нам нужна ваша электронную почта. Пожалуйста, попробуйте "
+"снова."
+
+#: .././public/class-facebook-login-public.php:195
+msgid "Invalid User"
+msgstr "Недействителен пользователь"
+
+#: .././public/class-facebook-login-public.php:212
+#: .././public/class-facebook-login-public.php:351
+msgid "User registration is disabled"
+msgstr "Регистрация пользователей отключена"
+
+#: .././public/class-facebook-login-public.php:288
+#, php-format
+msgid "Profile photo of %s"
+msgstr "Фото профиля %s"
+
+#: .././public/class-facebook-login-public.php:290
+msgid "Facebook Profile photo"
+msgstr "Фото профиля Facebook"
+
+#: .././public/class-facebook-login-public.php:322
+msgid "Wrong username or password"
+msgstr "Неверное имя пользователя или пароль"
+
+#: .././public/class-facebook-login-public.php:362
+msgid "Registration complete. You can now log in."
+msgstr "Зеестрация завершена. Теперь вы можете войти."
+
+#: .././public/class-facebook-login-public.php:364
+msgid "Something went wrong: "
+msgstr "Что-то пошло не так:"
+
+#: .././public/class-facebook-login-public.php:381
+msgid "Wrong username or email"
+msgstr "Неверное имя пользователя или адрес электронной почты"
+
+#: .././public/class-facebook-login-public.php:396
+msgid "Check your e-mail for the confirmation link."
+msgstr ""
+"Проверьте свою электронную почту, на которую было отправлено ссылку для "
+"подтверждения."
+
+#: .././public/class-facebook-login-public.php:453
+msgid "Someone requested that the password be reset for the following account:"
+msgstr "Кто-то прислал запрос на сброс пароля для этого профиля:"
+
+#: .././public/class-facebook-login-public.php:455
+#, php-format
+msgid "Username: %s"
+msgstr "Имя пользователя: %s"
+
+#: .././public/class-facebook-login-public.php:456
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+"Если вы считаете это ошибкой, просто игнорируйте это сообщение и ничего не "
+"случится."
+
+#: .././public/class-facebook-login-public.php:457
+msgid "To reset your password, visit the following address:"
+msgstr "Перейдите, пожалуйста, по ссылке, чтобы сбросить пароль:"
+
+#: .././public/class-facebook-login-public.php:469
+#, php-format
+msgid "[%s] Password Reset"
+msgstr "[%s] Сброс пароля"
+
+#: .././public/class-facebook-login-public.php:494
+msgid "The e-mail could not be sent."
+msgstr "Не удалось отправить сообщение."
+
+#: .././public/class-facebook-login-public.php:494
+msgid "Possible reason: your host may have disabled the mail() function."
+msgstr "Возможная причина: ваш хост мог отключить mail () функцию."
+
+#: .././public/class-facebook-login-public.php:653
+msgid "Profile Photo"
+msgstr "Фото профиля"
+
+#: .././public/partials/facebook-login-form.php:21
+msgid "Or fill the form below"
+msgstr "Или заполните поля ниже"
+
+#: .././public/partials/facebook-login-form.php:23
+msgid ""
+"Please enter your username or email address. You will receive a link to "
+"create a new password via email."
+msgstr ""
+"Пожалуйста, введите имя пользователя или электронную почту. Вы получите "
+"письмо со ссылкой на создание нового пароля."
+
+#: .././public/partials/facebook-login-form.php:25
+msgid "Email or Username"
+msgstr "Электронная почта или имя пользователя"
+
+#: .././public/partials/facebook-login-form.php:28
+msgid "Email"
+msgstr "Электронная почта"
+
+#: .././public/partials/facebook-login-form.php:31
+msgid "Password"
+msgstr "Пароль"
+
+#: .././public/partials/facebook-login-form.php:32
+msgid "Forgot your password?"
+msgstr "Забыли ваш пароль?"
+
+#: .././public/partials/facebook-login-form.php:36
+msgid "Log In"
+msgstr "Ввойти"
+
+#: .././public/partials/facebook-login-form.php:42
+msgid "Need to register?"
+msgstr "Нужно зарегистрироваться?"
+
+#: .././public/partials/facebook-login-form.php:44
+msgid "Already Registered?"
+msgstr "Уже регистрировались?"
+
+#: .././public/partials/facebook-login-form.php:47
+msgid "Log in"
+msgstr "Ввойти"
+
+#: .././public/partials/logged-user.php:25
+msgid "View Profile"
+msgstr "Посмотреть профиль"
+
+#: .././public/partials/logged-user.php:27
+msgid "Edit Profile"
+msgstr "Редактировать профиль"
