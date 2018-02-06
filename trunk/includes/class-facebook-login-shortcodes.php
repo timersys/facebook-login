@@ -77,7 +77,7 @@ class Facebook_Login_Shortcodes {
 
 		do_action('facebook_login_button');
 		$html = ob_get_contents();
-		ob_clean();
+		ob_end_clean();
 
 		return $html;
 	}
