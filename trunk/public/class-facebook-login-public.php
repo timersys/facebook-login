@@ -213,7 +213,7 @@ class Facebook_Login_Public {
 		check_ajax_referer( 'facebook-nonce', 'security' );
 
 		$access_token = isset( $_POST['fb_response']['authResponse']['accessToken'] ) ? $_POST['fb_response']['authResponse']['accessToken'] : '';
-
+		$fb_user_id = $_POST['fb_response']['authResponse']['userID'];
 		// Get user from Facebook with given access token
 		$fb_url = add_query_arg(
 			apply_filters( 'fbl/js_auth_data',
@@ -222,7 +222,7 @@ class Facebook_Login_Public {
 					'access_token'      =>  $access_token,
 				)
 			),
-			'https://graph.facebook.com/v2.10/'.$_POST['fb_response']['authResponse']['userID']
+			apply_filters( 'fbl/fb_api_url','https://graph.facebook.com/v2.10/'.$fb_user_id, $fb_user_id )
 		);
 		//
 		if( !empty( $this->opts['fb_app_secret'] ) ) {
