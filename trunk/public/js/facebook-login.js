@@ -77,6 +77,9 @@ function fbl_loginCheck() {
             button.removeClass('fbl-loading');
             if( navigator.userAgent.match('CriOS') )
                 window.open('https://www.facebook.com/dialog/oauth?client_id=' + fbl.appId + '&redirect_uri=' + document.location.href + '&scope='+fbl.scopes, '', null);
+
+            if( "standalone" in navigator && navigator.standalone )
+                window.location.assign('https://www.facebook.com/dialog/oauth?client_id=' + fbl.appId + '&redirect_uri=' + document.location.href + '&scope='+fbl.scopes);
         }
     };
 })( jQuery );
