@@ -218,7 +218,7 @@ class Facebook_Login_Public {
 		$fb_url = add_query_arg(
 			apply_filters( 'fbl/js_auth_data',
 				array(
-					'fields'            =>  'id,first_name,last_name,email,link',
+					'fields'            =>  'id,first_name,last_name,email',
 					'access_token'      =>  $access_token,
 				)
 			),
@@ -255,7 +255,6 @@ class Facebook_Login_Public {
 			'first_name' => $fb_user['first_name'],
 			'last_name'  => $fb_user['last_name'],
 			'user_email' => $fb_user['email'],
-			'user_url'   => $fb_user['link'],
 			'user_pass'  => wp_generate_password(),
 		));
 
