@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags: facebook, facebook login, woocommerce, easy digital downloads, facebook ajax, facebook registration, buddypress, registration form, login form, login widget, registration widget, ajax login, facebook ajax login, popup, popups, facebook popup, facebook avatars, buddypress
 Requires at least: 3.6
-Tested up to: 4.9.3
-Stable tag: 1.2.3.2
+Tested up to: 4.9.5
+Stable tag: 1.2.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,7 +84,11 @@ Nope really. The plugin is intended as a base for anyone needing facebook login
 
 == Changelog ==
 
+= 1.2.3.3 =
+* Fix issue with new FB update that broke user registration
+
 = 1.2.3.2 =
+* tagging new release for svn
 
 = 1.2.3.1 =
 * Branding changes to comply with WP guideliness
