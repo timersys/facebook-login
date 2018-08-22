@@ -1,33 +1,42 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Facebook Login\n"
-"POT-Creation-Date: 2016-08-04 10:33-0300\n"
-"PO-Revision-Date: 2016-08-04 10:35-0300\n"
-"Last-Translator: Libor Kovář <libor@liborkovar.cz>\n"
-"Language-Team: Timersys <info@timersys.com>\n"
-"Language: cs_CZ\n"
+"POT-Creation-Date: 2018-06-07 05:14+0000\n"
+"PO-Revision-Date: 2018-06-07 05:14+0000\n"
+"Last-Translator: gully <p.polivka@gmail.com>\n"
+"Language-Team: Čeština\n"
+"Language: cs-CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
+"Report-Msgid-Bugs-To: "
 
-#: admin/class-facebook-login-admin.php:103
-#: public/class-facebook-login-public.php:82
+#: includes/class-fbl-notices.php:33
+#, php-format
+msgid ""
+"We noticed that you have been using our plugin for a while and we would like "
+"to ask you a little favour. If you are happy with it and can take a minute "
+"please <a href=\"%s\" target=\"_blank\">leave a nice review</a> on WordPress."
+" It will be a tremendous help for us!"
+msgstr ""
+"Všimli jsme si, že již nějaký čas používáte náš plugin a rádi bychom vás "
+"požádali o malou laskavost. Pokud jste s ním spokojeni, <a href=\"%s\" "
+"target=\"_blank\"> zanechejte pozitivní hodnocení </a> v aplikaci WordPress. "
+"Bude to od Vás pro nás velká pomoc!"
+
+#: admin/class-facebook-login-admin.php:103 
+#: public/class-facebook-login-public.php:108
 msgid "Please login into facebook and then click connect button again"
 msgstr "Prosím přihlašte se do facebooku a potom znovu na tlačítko připojit"
 
-#: admin/class-facebook-login-admin.php:115
-#: public/class-facebook-login-public.php:550
-msgid "Facebook connection"
-msgstr "Facebook připojení"
-
-#: admin/class-facebook-login-admin.php:118
-#: public/class-facebook-login-public.php:553
+#: admin/class-facebook-login-admin.php:118 
+#: public/class-facebook-login-public.php:623
 msgid ""
 "Your profile is currently linked to your Facebook account. Click the button "
 "below to remove connection and avatar"
@@ -35,8 +44,8 @@ msgstr ""
 "Váš profil je v současné době propojen s vaším účtem na Facebooku. Kliknutím "
 "na tlačítko níže pro odpojení"
 
-#: admin/class-facebook-login-admin.php:121
-#: public/class-facebook-login-public.php:556
+#: admin/class-facebook-login-admin.php:121 
+#: public/class-facebook-login-public.php:626
 msgid "Link your facebook account to your profile."
 msgstr "Propojte svůj Facebook účet do svého profilu."
 
@@ -44,83 +53,63 @@ msgstr "Propojte svůj Facebook účet do svého profilu."
 msgid "App Secret Key"
 msgstr "App Secret Key"
 
+#: public/class-facebook-login-public.php:137
+msgid "Disconnect Facebook"
+msgstr "Odpojit Facebook"
+
+#: public/class-facebook-login-public.php:250
+msgid "We need your email in order to continue. Please try loging again. "
+msgstr ""
+"Pro pokračování je třeba zadat Vaší e-mailovou adresu. Zkuste to prosím "
+"znovu."
+
+#: public/class-facebook-login-public.php:263
+msgid "Invalid User"
+msgstr "Neexistující uživatel"
+
+#: public/class-facebook-login-public.php:282
+msgid "User registration is disabled"
+msgstr "Registrace nových uživatelů je zakázána"
+
+#: public/class-facebook-login-public.php:358
+msgid "Facebook Profile photo"
+msgstr "Profilová fotografie na Facebooku"
+
+#: public/class-facebook-login-public.php:620
+msgid "Facebook connection"
+msgstr "Facebook připojení"
+
 #: admin/partials/settings-app-id-field.php:14
 msgid "Create a new app and paste App Id here"
-msgstr "Vytvořte novou aplikaci a vložite zde ID aplikace"
-
-#: admin/partials/settings-app-secret-field.php:14
-msgid "Paste your App secret key"
-msgstr "Vložte váš App tajný klíč"
+msgstr "Vytvořte novou aplikaci a vložte zde její ID"
 
 #: admin/partials/settings-fb-avatars-field.php:14
 msgid "If checked, users registered with facebook will display fb avatar"
 msgstr ""
 "Je-li zaškrtnuto, budou se zobrazovat avatary uživatelů registrovaných přes "
-"facebook"
+"Facebook"
 
-#: includes/class-facebook-login.php:109 includes/class-facebook-login.php:117
-msgid "Cheatin&#8217; huh?"
-msgstr "Trampas eh?"
+#. Name of the plugin
+msgid "WP Facebook Login for WordPress"
+msgstr "WP Facebook Login for WordPress"
 
-#: includes/class-fbl-notices.php:33
-#, php-format
+#. Description of the plugin
 msgid ""
-"We noticed that you have been using our plugin for a while and we would like "
-"to ask you a little favour. If you are happy with it and can take a minute "
-"please <a href=\"%s\" target=\"_blank\">leave a nice review</a> on "
-"WordPress. It will be a tremendous help for us!"
+"Facebook Login. Simple adds a facebook login button into wp-login.php and "
+"let you use fb avatars, period."
 msgstr ""
-"Hemos notado que ha estado usando el plugin por un tiempo y queríamos "
-"pedirle un pequeño favor. Si usted está contento con el plugin y tiene un "
-"minuto, por favor <a href=\"%s\" target=\"_blank\">deje una linda reseña</a> "
-"en WordPress. Será una tremenda ayuda para nosotros!"
+"Přihlašte se přes Facebook. Jednoduše přidá tlačítko pro přihlášení se přes "
+"Facebook do souboru wp-login.php a umožní vám také používat profilové "
+"fotografie z Facebooku."
 
-#: includes/class-fbl-notices.php:35
-#, php-format
-msgid "<a href=\"%s\" target=\"_blank\">Leave a nice review</a>"
-msgstr "<a href=\"%s\" target=\"_blank\">Dejar una reseña</a>"
+#. URI of the plugin
+msgid "http://wordpress.org/plugins/wp-facebook-login"
+msgstr "http://wordpress.org/plugins/wp-facebook-login"
 
-#: includes/class-fbl-notices.php:36
-#, php-format
-msgid "<a href=\"%s\">I already did</a>"
-msgstr ""
+#. Author of the plugin
+msgid "Damian Logghe"
+msgstr "Damian Logghe"
 
-#: public/class-facebook-login-public.php:98
-msgid "Connect with Facebook"
-msgstr ""
-
-#: public/class-facebook-login-public.php:109
-msgid "Disconnect Facebook"
-msgstr "Odpojit Facebook"
-
-#: public/class-facebook-login-public.php:185
-msgid "We need your email in order to continue. Please try loging again. "
-msgstr ""
-"Potřebujeme váš email, aby jste mohl pokračovat. Zkuste to prosím znovu."
-
-#: public/class-facebook-login-public.php:199
-msgid "Invalid User"
-msgstr "Neexistující uživatel"
-
-#: public/class-facebook-login-public.php:217
-msgid "User registration is disabled"
-msgstr "Registrace novýcho uživatelů je zakázána"
-
-#: public/class-facebook-login-public.php:290
-#, php-format
-msgid "Profile photo of %s"
-msgstr "Profilová fotografie %s"
-
-#: public/class-facebook-login-public.php:292
-msgid "Facebook Profile photo"
-msgstr "Profilová fotografie na Facebooku"
-
-#: public/class-facebook-login-public.php:345
-msgid "Profile Photo"
-msgstr "Profilová fotografie"
-
-#~ msgid "<a href=\"%s\">No, thanks</a>"
-#~ msgstr "<a href=\"%s\">No, gracias</a>"
-
-#~ msgid "Přihlásit Facebookem"
-#~ msgstr "Přihlásit Facebookem"
+#. Author URI of the plugin
+msgid "https://timersys.com"
+msgstr "https://timersys.com"
