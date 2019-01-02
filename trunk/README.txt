@@ -26,6 +26,10 @@ If you want to show a disconnect button to remove facebook connection from a use
 
 ```<?php do_action('facebook_disconnect_button');?>```
 
+If you want to change the redirect url after used is logged in wp-login.php you can pass ?redirect_to= in the url or use the following filter:
+
+```add_filter('flp/redirect_url', function($url){ return site_url('another-url')});``
+
 = Configuration =
 Once you install the plugin, you need to configure it. Please follow [this guide](https://timersys.com/facebook-login/docs/configuration/) . That guide is for the premium version so be aware that the only shortcode available is `[fbl_login_button redirect="" hide_if_logged=""]`
 

@@ -134,7 +134,7 @@ class Facebook_Login_Public {
 
 		$redirect = apply_filters( 'flp/disconnect_redirect_url', ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 
-		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', 'fbl') .'<img data-no-lazy="1" src="'.site_url('/wp-includes/js/mediaelement/loading.gif').'" alt="" style="display:none"/></div></a>');
+		echo apply_filters('fbl/disconnect_button', '<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', 'fbl') .'<img data-no-lazy="1" src="'.admin_url('images/loading.gif').'" alt="" style="display:none"/></div></a>');
 
 	}
 	/**
@@ -325,10 +325,42 @@ class Facebook_Login_Public {
 	 *
 	 * @param string $alt Alternate text for the avatar.
 	 *
+	 * @param null $args
+	 *
 	 * @return string $avatar The modified avatar
 	 */
-	public function use_fb_avatars($avatar, $id_or_email, $size, $default, $alt ) {
+	public function use_fb_avatars($avatar, $id_or_email, $size, $default, $alt, $args = null ) {
 		$user = false;
+		$defaults = array(
+			// get_avatar_data() args.
+			'size'          => 96,
+			'height'        => null,
+			'width'         => null,
+			'default'       => get_option( 'avatar_default', 'mystery' ),
+			'force_default' => false,
+			'rating'        => get_option( 'avatar_rating' ),
+			'scheme'        => null,
+			'alt'           => '',
+			'class'         => null,
+			'force_display' => false,
+			'extra_attr'    => '',
+		);
+		if ( empty( $args ) ) {
+			$args = array();
+		}
+
+		$args['size']    = (int) $size;
+		$args['default'] = $default;
+		$args['alt']     = $alt;
+
+		$args = wp_parse_args( $args, $defaults );
+
+		if ( empty( $args['height'] ) ) {
+			$args['height'] = $args['size'];
+		}
+		if ( empty( $args['width'] ) ) {
+			$args['width'] = $args['size'];
+		}
 
 		if ( is_numeric( $id_or_email ) ) {
 
@@ -351,11 +383,11 @@ class Facebook_Login_Public {
 		}
 
 		// Image alt tag.
-		if ( empty( $alt ) ) {
+		if ( empty( $args['alt'] ) ) {
 			if ( function_exists( 'bp_core_get_user_displayname' ) )
-				$alt = sprintf( __( 'Profile photo of %s', 'buddypress' ), bp_core_get_user_displayname( $id ) );
+				$args['alt'] = sprintf( __( 'Profile photo of %s', 'buddypress' ), bp_core_get_user_displayname( $id ) );
 			else
-				$alt = __( 'Facebook Profile photo', 'fbl' );
+				$args['alt'] = __( 'Facebook Profile photo', 'fbl' );
 		}
 
 		if ( $user && is_object( $user ) ) {
@@ -363,10 +395,32 @@ class Facebook_Login_Public {
 
 			// get avatar with facebook id
 			if ( $fb_id = get_user_meta( $user_id, '_fb_user_id', true ) ) {
+				$class = array( 'avatar', 'avatar-' . (int) $args['size'], 'photo' );
+				if ( $args['force_default'] ) {
+					$class[] = 'avatar-default';
+				}
 
-				$fb_url = 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $size . '&height=' . $size;
-				$avatar = "<img alt='{$alt}' src='{$fb_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+				if ( $args['class'] ) {
+					if ( is_array( $args['class'] ) ) {
+						$class = array_merge( $class, $args['class'] );
+					} else {
+						$class[] = $args['class'];
+					}
+				}
 
+				$fb_url = 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . $args['width'] . '&height=' . $args['height'];
+				$url2x = 'https://graph.facebook.com/' . $fb_id . '/picture?width=' . ( (int) $args['width'] * 2 ) . '&height=' . ( (int) $args['height'] * 2 );
+				
+				$avatar = sprintf(
+					"<img alt='%s' src='%s' srcset='%s' class='%s' height='%d' width='%d' %s/>",
+					esc_attr( $args['alt'] ),
+					esc_url( $fb_url ),
+					esc_url( $url2x ) . ' 2x',
+					esc_attr( join( ' ', $class ) ),
+					(int) $args['height'],
+					(int) $args['width'],
+					$args['extra_attr']
+				);
 			}
 
 		}
