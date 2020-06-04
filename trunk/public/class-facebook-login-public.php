@@ -164,7 +164,7 @@ class Facebook_Login_Public {
 	                    xfbml      : true,
 	                    status     : false,
 	                    autoLogAppEvents : true,
-	                    version    : 'v2.10'
+	                    version    : 'v6.0'
 	                });
 	                window.FB.Event.subscribe('xfbml.render', function() {
 	                    FBL.renderFinish();
@@ -222,7 +222,7 @@ class Facebook_Login_Public {
 					'access_token'      =>  $access_token,
 				)
 			),
-			apply_filters( 'fbl/fb_api_url','https://graph.facebook.com/v2.10/'.$fb_user_id, $fb_user_id )
+			apply_filters( 'fbl/fb_api_url','https://graph.facebook.com/v6.0/'.$fb_user_id, $fb_user_id )
 		);
 		//
 		if( !empty( $this->opts['fb_app_secret'] ) ) {

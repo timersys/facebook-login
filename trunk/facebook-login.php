@@ -7,10 +7,10 @@
  * @package           Facebook_Login
  *
  * @wordpress-plugin
- * Plugin Name:       WP Facebook Login for WordPress
+ * Plugin Name:       Login for WordPress
  * Plugin URI:        http://wordpress.org/plugins/wp-facebook-login
  * Description:       Facebook Login. Simple adds a facebook login button into wp-login.php and let you use fb avatars, period.
- * Version:           1.2.3.4
+ * Version:           1.2.3.5
  * Author:            Damian Logghe
  * Author URI:        https://timersys.com
  * License:           GPL-2.0+
@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'FBL_VERSION', '1.2.3.4');
+define( 'FBL_VERSION', '1.2.3.5');
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-facebook-login-activator.php
